@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import persistState from 'redux-localstorage';
 
 import store from '../../reducers.js';
 
 const finalCreateStore = compose(
-  applyMiddleware(
+    persistState(),
+    applyMiddleware(
         thunkMiddleware
   )
 )(createStore);
