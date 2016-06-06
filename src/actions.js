@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { browserHistory } from 'react-router';
 
 export const ACTION_TYPE = 'ACTION_TYPE';
 export const INIT_AUTH = 'INIT_AUTH';
@@ -56,7 +57,6 @@ export function getUserData() {
 }
 
 export function signInError(error) {
-    console.log('error');
     return {
         type: SIGN_IN_ERROR,
         payload: error
@@ -64,8 +64,6 @@ export function signInError(error) {
 }
 
 export function signInSuccess(result) {
-    console.log('success');
-    // dispatch(getUserData(result));
     return {
         type: SIGN_IN_SUCCESS,
         payload: result.user
@@ -73,6 +71,7 @@ export function signInSuccess(result) {
 }
 
 export function signOutSuccess() {
+    browserHistory.push('/');
     return {
         type: SIGN_OUT_SUCCESS
     };
@@ -94,11 +93,5 @@ export function signOut() {
     return dispatch => {
         firebase.auth().signOut()
             .then(() => dispatch(signOutSuccess()));
-    };
-}
-
-export function callYourAction() {
-    return {
-        type: ACTION_TYPE
     };
 }

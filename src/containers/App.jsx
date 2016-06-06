@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { callYourAction, signInWithGoogle, signOut, getAppData } from '../actions.js';
+import { getAppData, signInWithGoogle, signOut } from '../actions.js';
+import NavBar from '../components/NavBar.jsx';
 
 import '../css/main.css';
 
@@ -8,33 +9,19 @@ class App extends Component {
 
     constructor(props){
         super(props);
-        this.signIn = this.signIn.bind(this);
-        this.signOut = this.signOut.bind(this);
     }
 
     componentWillMount() {
         this.props.getAppData();
     }
 
-    signIn(event) {
-        event.preventDefault();
-        this.props.signInWithGoogle();
-    }
-
-    signOut(event) {
-        event.preventDefault();
-        this.props.signOut();
-    }
-
-
     render() {
-        const { appState, children, callYourAction } = this.props;
-        const childrenWithProps = React.cloneElement(children, {appState, callYourAction});
+        const { appState, children } = this.props;
+        const childrenWithProps = React.cloneElement(children, {appState});
 
         return (
             <div>
-                <button onClick={this.signIn} type="button">Google</button>
-                <button onClick={this.signOut} type="button">Sign out</button>
+                <NavBar {...this.props} />
                 {childrenWithProps}
             </div>
         );
@@ -44,9 +31,6 @@ class App extends Component {
 // map actions to this.props.someFunction
 const mapDispatchToProps = (dispatch) => {
     return {
-        callYourAction: () => {
-            dispatch(callYourAction());
-        },
         signInWithGoogle: () => {
             dispatch(signInWithGoogle());
         },
