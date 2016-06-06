@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import { ACTION_TYPE, SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS  } from './actions.js';
+import { ACTION_TYPE, SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS, SET_APP_DATA, SET_USER_DATA } from './actions.js';
 
 const initialState = {
     test: 'Coucou monde',
     authenticated: false,
-    id: null
+    id: null,
+    appData: [],
+    userData: {},
 };
 
 export default function appState(state = initialState, {type, payload}) {
@@ -21,9 +23,17 @@ export default function appState(state = initialState, {type, payload}) {
             id: payload.uid
         });
     case SIGN_OUT_SUCCESS:
-        return  Object.assign({}, state, {
+        return Object.assign({}, state, {
             authenticated: false,
             id: null
+        });
+    case SET_APP_DATA:
+        return Object.assign({}, state, {
+            appData: payload
+        });
+    case SET_USER_DATA:
+        return Object.assign({}, state, {
+            userData: payload
         });
     default:
         return state;

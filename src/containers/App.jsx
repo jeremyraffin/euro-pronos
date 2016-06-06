@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { callYourAction, signInWithGoogle, signOut } from '../actions.js';
+import { callYourAction, signInWithGoogle, signOut, getAppData } from '../actions.js';
 
 import '../css/main.css';
 
@@ -10,6 +10,10 @@ class App extends Component {
         super(props);
         this.signIn = this.signIn.bind(this);
         this.signOut = this.signOut.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.getAppData();
     }
 
     signIn(event) {
@@ -48,8 +52,11 @@ const mapDispatchToProps = (dispatch) => {
         },
         signOut: () => {
             dispatch(signOut());
+        },
+        getAppData: () => {
+            dispatch(getAppData());
         }
-    }
+    };
 };
 
 function mapStateToProps(state) {
