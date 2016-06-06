@@ -8,6 +8,16 @@ import YourComponent from '../components/YourComponent.jsx';
 export default function Routes(props) {
     const history = syncHistoryWithStore(browserHistory, props.store);
 
+    console.log(props.store.getState());
+
+    function requireAuth() {
+        const state = props.store.getState();
+        const isAuth = state.appState.authenticated;
+        if (!isAuth) {
+            browserHistory.push();
+        }
+    }
+
     return (
         <Router history={history}>
             <Route path="/" component={App}>

@@ -13,6 +13,8 @@ var config = {
     storageBucket: "euro-pronos.appspot.com"
 };
 
+firebase.initializeApp(config);
+
 export function signInError(error) {
     console.log('error');
     return {
