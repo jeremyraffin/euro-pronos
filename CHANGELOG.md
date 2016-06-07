@@ -2,6 +2,29 @@
 
 ---
 
+## v0.1.3
+
+**Author**: Guillaume Mousnier.
+
+**Type**: Feature
+
+**Changes**:
+- Récupération des données utilisateurs à la connexion
+
+---
+
+## v0.1.2
+
+**Author**: Jeremy Raffin.
+
+**Type**: Feature
+
+**Changes**:
+- Ajout des routes
+- Ajout de premiers composants
+
+---
+
 ## v0.1.1
 
 **Author**: Guillaume Mousnier.
