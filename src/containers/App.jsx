@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAppData, signInWithGoogle, signOut } from '../actions.js';
+import { getAppData, getUserData, signInWithGoogle, signOut } from '../actions.js';
 import NavBar from '../components/NavBar.jsx';
 
 import '../css/main.css';
 
 class App extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
     componentWillMount() {
+        const { authenticated, id } = this.props;
         this.props.getAppData();
+        if (authenticated) {
+            this.props.getUserData(id);
+        }
     }
 
     render() {
@@ -39,7 +43,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         getAppData: () => {
             dispatch(getAppData());
-        }
+        },
+        getUserData: (uuid) => {
+            dispatch(getUserData(uuid));
+        },
     };
 };
 

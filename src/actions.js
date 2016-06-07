@@ -37,19 +37,25 @@ export function getAppData() {
     };
 }
 
-export function setUserData(newUserData) {
+export function updateUserData(userId, userData) {
+    firebase.database().ref(`/users/${userId}`).set({...userData});
+}
+
+export function setUserData(userId, newUserData) {
+    updateUserData(userId, newUserData);
     return {
         type: SET_USER_DATA,
         payload: newUserData
     };
 }
 
-export function getUserData() {
+export function getUserData(userId) {
     return dispatch => {
-        firebase.database().ref('/users/')
+        firebase.database().ref(`/users/${userId}`)
             .once('value')
             .then(result => {
-                dispatch(setUserData(result.val()));
+                const userData = Object.is(result.val(), null) ? {pronos: [], score: 0} : result.val();
+                dispatch(setUserData(userId, userData));
             }).catch(error => {
                 console.log(error);
             });
@@ -63,10 +69,10 @@ export function signInError(error) {
     };
 }
 
-export function signInSuccess(result) {
+export function signInSuccess(userCredentials) {
     return {
         type: SIGN_IN_SUCCESS,
-        payload: result.user
+        payload: userCredentials
     };
 }
 
@@ -81,8 +87,8 @@ export function signInWithGoogle() {
     return dispatch => {
         firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
             .then(result => {
-                dispatch(getUserData());
-                dispatch(signInSuccess(result));
+                dispatch(getUserData(result.user.uid));
+                dispatch(signInSuccess(result.user));
             }).catch(error => {
                 dispatch(signInError(error));
             });

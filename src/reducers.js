@@ -6,8 +6,8 @@ const initialState = {
     test: 'Coucou monde',
     authenticated: false,
     id: null,
-    appData: [],
-    userData: {},
+    appData: null,
+    userData: null,
 };
 
 export default function appState(state = initialState, {type, payload}) {
