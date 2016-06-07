@@ -8,14 +8,13 @@ try {
 }
 
 export default function NavBar(props) {
-
     const { signInWithGoogle, appState, signOut } = props;
 
     return (
         <nav>
             <ul>
                 <li>
-                    <Link to="/">Résultats</Link>
+                    <Link to="/">Calendrier</Link>
                 </li>
                 {
                     appState.authenticated ?
@@ -28,7 +27,7 @@ export default function NavBar(props) {
                 <li>
                     {
                         appState.authenticated ?
-                            <button onClick={signOut} type="button">Logout</button>
+                            <span>{appState.displayName}, <button onClick={signOut} type="button">Logout</button></span>
                             : <button onClick={signInWithGoogle} type="button">Login</button>
                     }
                 </li>

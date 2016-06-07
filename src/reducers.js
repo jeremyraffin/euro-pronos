@@ -3,10 +3,10 @@ import { routerReducer } from 'react-router-redux';
 import { ACTION_TYPE, SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS, SET_APP_DATA, SET_USER_DATA } from './actions.js';
 
 const initialState = {
-    test: 'Coucou monde',
     authenticated: false,
     id: null,
-    appData: null,
+    displayName: null,
+    matchs: null,
     userData: null,
 };
 
@@ -20,7 +20,8 @@ export default function appState(state = initialState, {type, payload}) {
     case SIGN_IN_SUCCESS:
         return Object.assign({}, state, {
             authenticated: true,
-            id: payload.uid
+            id: payload.uid,
+            displayName: payload.displayName
         });
     case SIGN_OUT_SUCCESS:
         return Object.assign({}, state, {
@@ -29,7 +30,7 @@ export default function appState(state = initialState, {type, payload}) {
         });
     case SET_APP_DATA:
         return Object.assign({}, state, {
-            appData: payload
+            matchs: payload
         });
     case SET_USER_DATA:
         return Object.assign({}, state, {

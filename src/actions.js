@@ -70,6 +70,7 @@ export function signInError(error) {
 }
 
 export function signInSuccess(userCredentials) {
+    console.log(userCredentials);
     return {
         type: SIGN_IN_SUCCESS,
         payload: userCredentials

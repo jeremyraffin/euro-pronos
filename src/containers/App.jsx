@@ -25,6 +25,7 @@ class App extends Component {
 
         return (
             <div>
+                <h1>euros-pronos</h1>
                 <NavBar {...this.props} />
                 {childrenWithProps}
             </div>
