@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAppData, getUserData, signInWithGoogle, signOut } from '../actions.js';
+import { getAppData, getUserData, setUserData, signInWithGoogle, signOut } from '../actions.js';
 import NavBar from '../components/NavBar.jsx';
 
 import '../css/main.css';
@@ -21,7 +21,7 @@ class App extends Component {
 
     render() {
         const { appState, children } = this.props;
-        const childrenWithProps = React.cloneElement(children, {appState});
+        const childrenWithProps = React.cloneElement(children, {...appState, setUserData: this.props.setUserData});
 
         return (
             <div>
@@ -46,6 +46,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         getUserData: (uuid) => {
             dispatch(getUserData(uuid));
+        },
+        setUserData: (uuid, newUserData) => {
+            dispatch(setUserData(uuid, newUserData));
         },
     };
 };

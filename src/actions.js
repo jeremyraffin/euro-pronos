@@ -101,3 +101,9 @@ export function signOut() {
             .then(() => dispatch(signOutSuccess()));
     };
 }
+
+export function updateBets() {
+    return dispatch => {
+
+    }
+}
