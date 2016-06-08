@@ -3,37 +3,98 @@
 }
 
 .Header {
-
+    background-color: #83ad06;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0rem 2rem;
 }
 
 .NavBar {
-
+ height: 80px;
 }
+
+.NavBar ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    align-content: space-around;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+.NavBar li {
+    display: flex;
+    padding: 0rem 1rem;
+    align-items: center;
+    height: 100%;
+}
+
+.NavBar li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.NavBar a {
+    color: #fff;
+    text-decoration: none;
+}
+
 
 .Main {
 
 }
 
 .Calendar {
-
+    padding: 0rem 2rem;
 }
 
 .Day {
+    padding: 1rem 0rem;
+}
 
+.Day h2 {
+    font-size: 1.1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #eaeaea;
 }
 
 .MatchList {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
 
 }
 
 .MatchItem {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #eaeaea;
+    padding: 1rem 0.4rem;
+}
 
+.MatchItem time {
+    color: #b2b2b2;
+}
+
+.MatchItem:first-child {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #eaeaea;
+    padding: 0rem 0.4rem 1rem;
 }
 
 .TeamList {
+    display: flex;
+    flex-direction: row;
 
 }
 
 .TeamItem {
-
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
 }
