@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAppData, getUserData, signInWithGoogle, signOut } from '../actions.js';
+import { getAppData, getUserData, setUserData, signInWithGoogle, signOut } from '../actions.js';
 import NavBar from '../components/NavBar.jsx';
 
-import 'normalize-css'
+import 'normalize-css';
 import '../css/main.css';
 
 class App extends Component {
@@ -20,25 +20,38 @@ class App extends Component {
         }
     }
 
-    render() {
-        const { appState, children } = this.props;
-        const childrenWithProps = React.cloneElement(children, {appState});
+    renderChildrenWithProps() {
+        const { userData, matchs, children } = this.props;
+        const childrensProps = {
+            Bets: {
+                bets: userData.bets,
+                score: userData.score,
+                matchs,
+                handleChange: this.props.setUserData
+            }
+        };
 
+        return React.cloneElement(this.props.children, {...childrensProps[children.type.name]});
+    }
+
+    render() {
+        const { authenticated } = this.props;
         return (
             <div className="App">
                 <header className="Header">
                     <h1>euros-pronos</h1>
-                    <NavBar {...this.props} />
+                        <NavBar authenticated={authenticated}
+                            signout={this.props.signOut}
+                            signInWithGoogle={this.props.signInWithGoogle} />
                 </header>
                 <main className="Main">
-                    {childrenWithProps}
+                    {this.renderChildrenWithProps()}
                 </main>
             </div>
         );
     }
 }
 
-// map actions to this.props.someFunction
 const mapDispatchToProps = (dispatch) => {
     return {
         signInWithGoogle: () => {
@@ -53,12 +66,17 @@ const mapDispatchToProps = (dispatch) => {
         getUserData: (uuid) => {
             dispatch(getUserData(uuid));
         },
+        setUserData: (uuid, newUserData) => {
+            dispatch(setUserData(uuid, newUserData));
+        },
     };
 };
 
 function mapStateToProps(state) {
     return {
-        appState: state.appState
+        matchs: state.appState.matchs,
+        authenticated: state.appState.authenticated,
+        userData: state.appState.userData,
     };
 }
 

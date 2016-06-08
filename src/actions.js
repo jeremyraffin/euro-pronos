@@ -54,7 +54,7 @@ export function getUserData(userId) {
         firebase.database().ref(`/users/${userId}`)
             .once('value')
             .then(result => {
-                const userData = Object.is(result.val(), null) ? {pronos: [], score: 0} : result.val();
+                const userData = Object.is(result.val(), null) ? {bets: [], score: 0} : result.val();
                 dispatch(setUserData(userId, userData));
             }).catch(error => {
                 console.log(error);
