@@ -13,22 +13,26 @@ class App extends Component {
     }
 
     componentWillMount() {
-        const { authenticated, id } = this.props;
+        const { authenticated, userId } = this.props;
         this.props.getAppData();
         if (authenticated) {
-            this.props.getUserData(id);
+            this.props.getUserData(userId);
         }
     }
 
     renderChildrenWithProps() {
-        const { userData, matchs, children } = this.props;
+        const { userId, userData, matchs, children, dispatch } = this.props;
         const childrensProps = {
             Bets: {
                 bets: userData.bets,
                 score: userData.score,
                 matchs,
-                handleChange: this.props.setUserData
-            }
+                handleChange: (newUserData) => dispatch(setUserData(userId, newUserData))
+            },
+            Calendar: {
+                matchs,
+            },
+            Ranking: {}
         };
 
         return React.cloneElement(this.props.children, {...childrensProps[children.type.name]});
@@ -66,9 +70,7 @@ const mapDispatchToProps = (dispatch) => {
         getUserData: (uuid) => {
             dispatch(getUserData(uuid));
         },
-        setUserData: (uuid, newUserData) => {
-            dispatch(setUserData(uuid, newUserData));
-        },
+        dispatch
     };
 };
 
@@ -77,6 +79,7 @@ function mapStateToProps(state) {
         matchs: state.appState.matchs,
         authenticated: state.appState.authenticated,
         userData: state.appState.userData,
+        userId: state.appState.id,
     };
 }
 

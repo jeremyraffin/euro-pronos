@@ -20,7 +20,7 @@ export default function Bets(props) {
                     matchs.map(match => (
                         <Bet match={match}
                             bet={getBetByMatch(match, bets)}
-                            handleChange={(newBet) => handleChange(match.id, mergeBets(bets, match, score, newBet))} />
+                            handleChange={(newBet) => handleChange(mergeBets(bets, match, score, newBet))} />
                         )
                     )
                 }
@@ -30,7 +30,15 @@ export default function Bets(props) {
 }
 
 Bets.defaultProps = {
+    matchs: [],
+    score: 0,
+    bets: [],
+    handleChange: () => {}
 };
 
 Bets.propTypes = {
+    matchs: PropTypes.arrayOf(PropTypes.object),
+    score: PropTypes.number,
+    bets: PropTypes.arrayOf(PropTypes.object),
+    handleChange: PropTypes.func
 };

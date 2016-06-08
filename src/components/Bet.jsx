@@ -10,7 +10,7 @@ function mergeBet(event, oldBet, match) {
     });
 }
 
-function Bet(props) {
+export default function Bet(props) {
     const { match, bet, handleChange } = props;
     return (
         <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -31,4 +31,14 @@ function Bet(props) {
     );
 }
 
-export default Bet;
+Bet.defaultProps = {
+    match: {},
+    bet: {},
+    handleChange: () => {}
+};
+
+Bet.propTypes = {
+    match: PropTypes.object,
+    bet: PropTypes.object,
+    handleChange: PropTypes.func
+};

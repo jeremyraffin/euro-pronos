@@ -31,7 +31,13 @@ export default function NavBar(props) {
 }
 
 NavBar.defaultProps = {
+    authenticated: false,
+    signInWithGoogle: () => {},
+    signOut: () => {}
 };
 
 NavBar.propTypes = {
+    authenticated: PropTypes.bool,
+    signInWithGoogle: PropTypes.func,
+    signOut: PropTypes.func
 };
