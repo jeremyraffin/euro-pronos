@@ -1,3 +1,10 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
 .App {
     font-family: 'Roboto', sans-serif;
 }
@@ -60,7 +67,7 @@
     text-decoration: none;
 }
 
-.NavBar li:hover a, .NavBar li:hover button {
+.NavBar li:hover a, .NavBar li:hover button, .NavBar li .active {
     background-color: rgba(255, 255, 255, 0.2);
     color: rgba(255, 255, 255, 1);
 
@@ -74,11 +81,6 @@
     font-weight: 300;
 }
 
-.Logout {
-    display: flex;
-    align-items: center;
-}
-
 .Main {
 
 }
@@ -88,7 +90,11 @@
 }
 
 .Day {
-    padding: 1rem 0rem;
+    padding: 2rem 0rem;
+}
+
+.Day + .Day {
+    padding-top: 0;
 }
 
 .Day h2 {
@@ -96,12 +102,14 @@
     font-weight: 500;
     padding-bottom: .4rem;
     border-bottom: 1px solid #eaeaea;
+    margin: 0;
 }
 
 .MatchList {
     display: flex;
     flex-direction: column;
     list-style: none;
+    margin: 0;
     padding: 0;
 
 }
@@ -110,8 +118,9 @@
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #eaeaea;
-    padding: 1rem 0.4rem;
     justify-content: space-between;
+    height: 3rem;
+    align-items: center;
 }
 
 .MatchItem time {
@@ -124,7 +133,6 @@
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #eaeaea;
-    padding: 0rem 0.4rem 1rem;
 }
 
 .TeamList {
