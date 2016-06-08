@@ -2,6 +2,30 @@
 
 ---
 
+## v0.1.6
+
+**Author**: Guillaume Mousnier
+
+**Type**: Feature
+
+**Changes**:
+- Ajout du score
+
+
+---
+
+## v0.1.5
+
+**Author**: Jeremy et Jerome Raffin
+
+**Type**: Feature
+
+**Changes**:
+- Ajout du style
+
+
+---
+
 ## v0.1.4
 
 **Author**: Guillaume Mousnier.
