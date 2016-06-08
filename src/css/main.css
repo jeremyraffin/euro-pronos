@@ -1,47 +1,83 @@
 .App {
-
+    font-family: 'Roboto', sans-serif;
 }
 
 .Header {
-    background-color: #83ad06;
+    background-color: #4CAF50;
     color: white;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 0rem 2rem;
+    height: 4rem;
+}
+
+.Logo {
+    font-size: 1.6rem;
+    font-style: italic;
+    margin: 0;
+}
+
+.Logo span:first-child{
+    font-weight: 500;
+}
+
+.Logo span:last-child{
+    font-weight: 300;
 }
 
 .NavBar {
- height: 80px;
+    font-weight: 300;
 }
 
-.NavBar ul {
+.NavBar, .NavBar ul {
     display: flex;
-    flex-direction: row;
-    list-style: none;
-    align-content: space-around;
-    padding: 0;
-    margin: 0;
-    height: 100%;
-}
-
-.NavBar li {
-    display: flex;
-    padding: 0rem 1rem;
     align-items: center;
     height: 100%;
 }
 
-.NavBar li:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+.NavBar ul {
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    margin-right: -2rem;
 }
 
-.NavBar a {
-    color: #fff;
+.NavBar li {
+    display: flex;
+    height: 100%;
+}
+
+.NavBar li a {
+    display: flex;
+    height: 100%;
+    padding: 0rem 1rem;
+    align-items: center;
+    color: rgba(255, 255, 255, .8);
     text-decoration: none;
 }
 
+.NavBar li:hover a, .NavBar li:hover button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 1);
+
+}
+
+.NavBar button {
+    background-color: transparent;
+    border: none;
+    color: rgba(255, 255, 255, .8);
+    padding: 0 1rem;
+    font-weight: 300;
+}
+
+.Logout {
+    display: flex;
+    align-items: center;
+}
 
 .Main {
 
@@ -57,7 +93,8 @@
 
 .Day h2 {
     font-size: 1.1rem;
-    padding-bottom: 0.4rem;
+    font-weight: 500;
+    padding-bottom: .4rem;
     border-bottom: 1px solid #eaeaea;
 }
 
@@ -74,10 +111,13 @@
     flex-direction: row;
     border-bottom: 1px solid #eaeaea;
     padding: 1rem 0.4rem;
+    justify-content: space-between;
 }
 
 .MatchItem time {
     color: #b2b2b2;
+    font-size: .8rem;
+    font-weight: 500;
 }
 
 .MatchItem:first-child {
@@ -90,11 +130,39 @@
 .TeamList {
     display: flex;
     flex-direction: row;
-
+    padding-left: 0;
+    align-items: center;
 }
 
 .TeamItem {
     display: flex;
-    flex-direction: column;
-    padding: 0 1rem;
+    flex-direction: row;
+    align-items: center;
+}
+
+.TeamItem .team {
+    width: 6rem;
+    font-size: .9rem;
+}
+
+.TeamItem .score {
+    font-weight: 500;
+}
+
+.TeamItem:first-child .team {
+    margin-right: 1.2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.TeamItem:first-child .score {
+    margin-right: .2rem;
+}
+
+.TeamItem:last-child .team {
+    margin-left: 1.2rem;
+}
+
+.TeamItem:last-child .score {
+    margin-left: .2rem;
 }

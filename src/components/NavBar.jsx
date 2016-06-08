@@ -21,7 +21,7 @@ export default function NavBar(props) {
                 <li>
                     {
                         appState.authenticated ?
-                            <span>{appState.displayName}, <button onClick={signOut} type="button">Logout</button></span>
+                            <span className="Logout">{appState.displayName}, <button onClick={signOut} type="button">Logout</button></span>
                             : <button onClick={signInWithGoogle} type="button">Login</button>
                     }
                 </li>

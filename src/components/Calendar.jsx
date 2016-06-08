@@ -47,15 +47,17 @@ export default function Calendar(props) {
                                                                 {match.team1.score ? match.team1.score : ''}
                                                             </span>
                                                         </li>
+                                                        -
                                                         <li className="TeamItem">
-                                                            <span className="team">
-                                                                {match.team2.name}
-                                                            </span>
                                                             <span className="score">
                                                                 {match.team2.score ? match.team2.score : ''}
                                                             </span>
+                                                            <span className="team">
+                                                                {match.team2.name}
+                                                            </span>
                                                         </li>
                                                     </ul>
+                                                    <span className="UserScore"></span>
                                                 </li>
                                             )
                                         })

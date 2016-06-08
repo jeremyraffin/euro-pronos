@@ -27,7 +27,10 @@ class App extends Component {
         return (
             <div className="App">
                 <header className="Header">
-                    <h1>euros-pronos</h1>
+                    <h1 className="Logo">
+                        <span>euro</span>
+                        <span>pronos</span>
+                    </h1>
                     <NavBar {...this.props} />
                 </header>
                 <main className="Main">
