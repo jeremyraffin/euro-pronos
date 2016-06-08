@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 export default function NavBar(props) {
-    const { signInWithGoogle, appState, signOut } = props;
+    const { signInWithGoogle, authenticated, signOut } = props;
 
     return (
         <nav className="NavBar">
@@ -11,7 +11,7 @@ export default function NavBar(props) {
                     <Link to="/">Calendrier</Link>
                 </li>
                 {
-                    appState.authenticated ?
+                    authenticated ?
                         <li><Link to="/bets">Pronos</Link> </li>
                         : ''
                 }
@@ -20,8 +20,8 @@ export default function NavBar(props) {
                 </li>
                 <li>
                     {
-                        appState.authenticated ?
-                            <span>{appState.displayName}, <button onClick={signOut} type="button">Logout</button></span>
+                        authenticated ?
+                            <button onClick={signOut} type="button">Logout</button>
                             : <button onClick={signInWithGoogle} type="button">Login</button>
                     }
                 </li>
@@ -31,7 +31,13 @@ export default function NavBar(props) {
 }
 
 NavBar.defaultProps = {
+    authenticated: false,
+    signInWithGoogle: () => {},
+    signOut: () => {}
 };
 
 NavBar.propTypes = {
+    authenticated: PropTypes.bool,
+    signInWithGoogle: PropTypes.func,
+    signOut: PropTypes.func
 };
