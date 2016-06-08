@@ -9,7 +9,7 @@ try {
 
 export default function NavBar(props) {
 
-    const { signInWithGoogle, appState, signOut } = props;
+    const { signInWithGoogle, authenticated, signOut } = props;
 
     return (
         <nav>
@@ -18,7 +18,7 @@ export default function NavBar(props) {
                     <Link to="/">Résultats</Link>
                 </li>
                 {
-                    appState.authenticated ?
+                    authenticated ?
                         <li><Link to="/bets">Pronos</Link> </li>
                         : ''
                 }
@@ -27,7 +27,7 @@ export default function NavBar(props) {
                 </li>
                 <li>
                     {
-                        appState.authenticated ?
+                        authenticated ?
                             <button onClick={signOut} type="button">Logout</button>
                             : <button onClick={signInWithGoogle} type="button">Login</button>
                     }

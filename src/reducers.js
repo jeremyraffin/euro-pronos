@@ -6,8 +6,11 @@ const initialState = {
     test: 'Coucou monde',
     authenticated: false,
     id: null,
-    appData: null,
-    userData: null,
+    matchs: null,
+    userData: {
+        bets: [],
+        score: 0,
+    },
 };
 
 export default function appState(state = initialState, {type, payload}) {
@@ -16,7 +19,6 @@ export default function appState(state = initialState, {type, payload}) {
         return Object.assign({}, state, {
             test: 'Hello World'
         });
-
     case SIGN_IN_SUCCESS:
         return Object.assign({}, state, {
             authenticated: true,
@@ -29,12 +31,10 @@ export default function appState(state = initialState, {type, payload}) {
         });
     case SET_APP_DATA:
         return Object.assign({}, state, {
-            appData: payload
+            matchs: payload
         });
     case SET_USER_DATA:
-        return Object.assign({}, state, {
-            userData: payload
-        });
+        return Object.assign({}, state, {userData: Object.assign({}, state.userData, payload)});
     default:
         return state;
     }

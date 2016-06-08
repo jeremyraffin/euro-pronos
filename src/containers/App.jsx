@@ -19,20 +19,33 @@ class App extends Component {
         }
     }
 
-    render() {
-        const { appState, children } = this.props;
-        const childrenWithProps = React.cloneElement(children, {...appState, setUserData: this.props.setUserData});
+    renderChildrenWithProps() {
+        const { userData, matchs, children } = this.props;
+        const childrensProps = {
+            Bets: {
+                bets: userData.bets,
+                score: userData.score,
+                matchs,
+                handleChange: this.props.setUserData
+            }
+        };
 
+        return React.cloneElement(this.props.children, {...childrensProps[children.type.name]});
+    }
+
+    render() {
+        const { authenticated } = this.props;
         return (
             <div>
-                <NavBar {...this.props} />
-                {childrenWithProps}
+                <NavBar authenticated={authenticated}
+                    signout={this.props.signOut}
+                    signInWithGoogle={this.props.signInWithGoogle} />
+                {this.renderChildrenWithProps()}
             </div>
         );
     }
 }
 
-// map actions to this.props.someFunction
 const mapDispatchToProps = (dispatch) => {
     return {
         signInWithGoogle: () => {
@@ -55,7 +68,9 @@ const mapDispatchToProps = (dispatch) => {
 
 function mapStateToProps(state) {
     return {
-        appState: state.appState
+        matchs: state.appState.matchs,
+        authenticated: state.appState.authenticated,
+        userData: state.appState.userData,
     };
 }
 
