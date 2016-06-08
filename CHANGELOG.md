@@ -2,6 +2,18 @@
 
 ---
 
+## v0.1.4
+
+**Author**: Guillaume Mousnier.
+
+**Type**: Feature
+
+**Changes**:
+- Création des composants Bets et Bets
+- Connexion avec le store et firebase
+
+---
+
 ## v0.1.3
 
 **Author**: Guillaume Mousnier.
