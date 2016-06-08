@@ -5,7 +5,7 @@ function mergeBet(event, oldBet, match) {
         id: match.id,
         [event.target.name]: {
             name: match[event.target.name].name,
-            score: event.target.value
+            score: event.target.value.trim()
         }
     });
 }
@@ -18,15 +18,15 @@ export default function Bet(props) {
             <input
                 name="team1"
                 type="number"
-                value={bet && bet.team1 ? bet.team1.score : ''}
+                value={bet.team1.score ? bet.team1.score : ''}
                 onChange={(event) => handleChange(mergeBet(event, bet, match))} />
             <input
                 name="team2"
                 type="number"
-                value={bet && bet.team2 ? bet.team2.score : ''}
+                value={bet.team2.score ? bet.team2.score : ''}
                 onChange={(event) => handleChange(mergeBet(event, bet, match))} />
             <label>{match.team2.name}</label>
-            { bet && bet.team2.score && bet.team1.score ? <div style={{color: 'green'}}>Validated</div> : ''}
+            { bet.team2.score && bet.team1.score ? <div style={{color: 'green'}}>Validated</div> : '' }
         </div>
     );
 }

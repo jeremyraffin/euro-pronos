@@ -3,7 +3,15 @@ import React, { PropTypes } from 'react';
 import Bet from './Bet.jsx';
 
 function getBetByMatch(match, bets) {
-    return bets.find((bet) => match.id === bet.id);
+    const targetedBet = bets.find((bet) => match.id === bet.id);
+    if (targetedBet) {
+        return targetedBet;
+    }
+    return {
+        id: match.id,
+        team1: {},
+        team2: {}
+    };
 }
 
 function mergeBets(bets, match, score, newBet) {
