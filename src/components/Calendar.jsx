@@ -4,16 +4,15 @@ import moment from 'moment';
 moment.locale('fr');
 
 export default function Calendar(props) {
-
-    const { appState } = props;
+    const { matchs } = props;
 
     let dates = [];
 
-    if (appState.matchs) {
-        dates = ([...new Set(appState.matchs.map(match =>
+    if (matchs) {
+        dates = ([...new Set(matchs.map(match =>
             moment(match.date).format('L')
         ))].map(date =>
-            appState.matchs.filter(match => moment(match.date).format('L') === date)
+            matchs.filter(match => moment(match.date).format('L') === date)
         ));
     }
     return (
@@ -72,9 +71,9 @@ export default function Calendar(props) {
 }
 
 Calendar.defaultProps = {
-
+    matchs: []
 };
 
 Calendar.propTypes = {
-
+    matchs: PropTypes.arrayOf(PropTypes.object)
 };
