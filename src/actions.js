@@ -1,7 +1,6 @@
 import firebase from 'firebase';
 import { browserHistory } from 'react-router';
 
-export const ACTION_TYPE = 'ACTION_TYPE';
 export const INIT_AUTH = 'INIT_AUTH';
 export const SIGN_IN_ERROR = 'SIGN_IN_ERROR';
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
@@ -28,11 +27,8 @@ export function setAppData(newAppData) {
 export function getAppData() {
     return dispatch => {
         firebase.database().ref('/matchs/')
-            .once('value')
-            .then(result => {
+            .on('value', result => {
                 dispatch(setAppData(result.val()));
-            }).catch(error => {
-                console.log(error);
             });
     };
 }
