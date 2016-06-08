@@ -1,17 +1,11 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-try {
-    require('../css/main.css');
-} catch (error) {
-    console.log('can\'t import css.');
-}
-
 export default function NavBar(props) {
     const { signInWithGoogle, appState, signOut } = props;
 
     return (
-        <nav>
+        <nav className="NavBar">
             <ul>
                 <li>
                     <Link to="/">Calendrier</Link>

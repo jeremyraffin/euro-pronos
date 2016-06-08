@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getAppData, getUserData, signInWithGoogle, signOut } from '../actions.js';
 import NavBar from '../components/NavBar.jsx';
 
+import 'normalize-css'
 import '../css/main.css';
 
 class App extends Component {
@@ -24,10 +25,14 @@ class App extends Component {
         const childrenWithProps = React.cloneElement(children, {appState});
 
         return (
-            <div>
-                <h1>euros-pronos</h1>
-                <NavBar {...this.props} />
-                {childrenWithProps}
+            <div className="App">
+                <header className="Header">
+                    <h1>euros-pronos</h1>
+                    <NavBar {...this.props} />
+                </header>
+                <main className="Main">
+                    {childrenWithProps}
+                </main>
             </div>
         );
     }
