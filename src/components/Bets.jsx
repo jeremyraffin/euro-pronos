@@ -23,6 +23,7 @@ export default function Bets(props) {
     return (
         <div>
             <h2>Bets</h2>
+            <div>score: {score}</div>
             <div>
                 {
                     matchs.map(match => (

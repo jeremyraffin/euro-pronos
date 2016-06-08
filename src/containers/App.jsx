@@ -20,6 +20,13 @@ class App extends Component {
         }
     }
 
+    compononentWillReceiveProps(nextProps) {
+        const { userData, dispatch } = this.props;
+        if (nextProps.userData.score !== userData.score) {
+            dispatch(setUserData(nextProps.userId, nextProps.userData));
+        }
+    }
+
     renderChildrenWithProps() {
         const { userId, userData, matchs, children, dispatch } = this.props;
         const childrensProps = {
