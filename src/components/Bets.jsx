@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 
+import Day from './partials/Day.jsx';
 import Bet from './Bet.jsx';
 
 function getBetByMatch(match, bets) {
@@ -23,17 +24,22 @@ function mergeBets(bets, match, score, newBet) {
 }
 
 export default function Bets(props) {
-    const { matchs, bets, score, handleChange } = props;
+    const { matchsByDate, bets, score, handleChange } = props;
+
     return (
         <div>
             <h2>Bets</h2>
             <div>score: {score}</div>
             <div>
                 {
-                    matchs.map(match => (
-                        <Bet match={match}
-                            bet={getBetByMatch(match, bets)}
-                            handleChange={(newBet) => handleChange(mergeBets(bets, match, score, newBet))} />
+                    matchsByDate.map(date => (
+                            <Day key={date[0].date} date={date[0].date}>
+                                {date.map(match => (
+                                    <Bet match={match}
+                                        bet={getBetByMatch(match, bets)}
+                                        handleChange={(newBet) => handleChange(mergeBets(bets, match, score, newBet))} />
+                                ))}
+                            </Day>
                         )
                     )
                 }
@@ -43,14 +49,14 @@ export default function Bets(props) {
 }
 
 Bets.defaultProps = {
-    matchs: [],
+    matchsByDate: [],
     score: 0,
     bets: [],
     handleChange: () => {}
 };
 
 Bets.propTypes = {
-    matchs: PropTypes.arrayOf(PropTypes.object),
+    matchsByDate: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
     score: PropTypes.number,
     bets: PropTypes.arrayOf(PropTypes.object),
     handleChange: PropTypes.func

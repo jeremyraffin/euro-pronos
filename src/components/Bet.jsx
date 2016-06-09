@@ -21,23 +21,44 @@ export default function Bet(props) {
     const betIsClosed = checkDate(match.date);
     const onChange = betIsClosed ? () => {} : (event) => handleChange(mergeBet(event, bet, match));
     return (
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-            <label>{match.team1.name}</label>
-            <input
-                name="team1"
-                type="number"
-                value={Number.isInteger(bet.team1.score) ? bet.team1.score : ''}
-                onChange={onChange}
-                disabled={betIsClosed} />
-            <input
-                name="team2"
-                type="number"
-                value={Number.isInteger(bet.team1.score) ? bet.team2.score : ''}
-                onChange={onChange}
-                disabled={betIsClosed} />
-            <label>{match.team2.name}</label>
-            { Number.isInteger(bet.team2.score) && Number.isInteger(bet.team1.score) ? <div style={{color: 'green'}}>Validated</div> : '' }
-        </div>
+        <li key={match.date} className="MatchItem">
+            <time dateTime={moment(props.match.date).format('LT')}>
+                {moment(props.match.date).format('LT')}
+            </time>
+            <ul className="TeamList">
+                <li className="TeamItem">
+                    <span className="team">
+                        {match.team1.name}
+                    </span>
+                    <span className="score">
+                        <input
+                            name="team1"
+                            type="number"
+                            value={Number.isInteger(bet.team1.score) ? bet.team1.score : ''}
+                            onChange={onChange}
+                            disabled={betIsClosed} />
+                    </span>
+                </li>
+                -
+                <li className="TeamItem">
+                    <span className="score">
+                        <input
+                            name="team2"
+                            type="number"
+                            value={Number.isInteger(bet.team1.score) ? bet.team2.score : ''}
+                            onChange={onChange}
+                            disabled={betIsClosed} />
+                    </span>
+                    <span className="team">
+                        {match.team2.name}
+                    </span>
+                </li>
+                <li>
+                    { Number.isInteger(bet.team2.score) && Number.isInteger(bet.team1.score) ? <div style={{color: 'green'}}>Validated</div> : '' }
+                </li>
+            </ul>
+            <span className="UserScore"></span>
+        </li>
     );
 }
 

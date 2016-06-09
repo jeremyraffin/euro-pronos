@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
+import moment from 'moment';
+moment.locale('fr');
+
 import { SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS, SET_APP_DATA, SET_USER_DATA } from './actions.js';
 
 const initialState = {
@@ -7,6 +10,7 @@ const initialState = {
     id: null,
     displayName: null,
     matchs: null,
+    matchsByDate: [],
     userData: {
         bets: [],
         score: 0,
@@ -37,6 +41,14 @@ function computeUserScore(matchs, bets) {
     return scoreByBet.reduce((n, v) => n + v, 0);
 }
 
+function orderMatchsByDate(matchs) {
+    return ([...new Set(matchs.map(match =>
+        moment(match.date).format('L')
+    ))].map(date =>
+        matchs.filter(match => moment(match.date).format('L') === date)
+    ));
+}
+
 export default function appState(state = initialState, {type, payload}) {
     switch (type) {
     case SIGN_IN_SUCCESS:
@@ -53,6 +65,7 @@ export default function appState(state = initialState, {type, payload}) {
     case SET_APP_DATA:
         return Object.assign({}, state, {
             matchs: payload,
+            matchsByDate: orderMatchsByDate(payload),
             userData: {
                 score: computeUserScore(payload, state.userData.bets)
             }
