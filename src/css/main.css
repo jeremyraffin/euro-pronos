@@ -82,11 +82,10 @@ html {
 }
 
 .Main {
-
+    padding: 0rem 2rem;
 }
 
 .Calendar {
-    padding: 0rem 2rem;
 }
 
 .Day {
@@ -127,6 +126,7 @@ html {
     color: #b2b2b2;
     font-size: .8rem;
     font-weight: 500;
+    padding-left: .8rem;
 }
 
 .MatchItem:first-child {
@@ -140,6 +140,10 @@ html {
     flex-direction: row;
     padding-left: 0;
     align-items: center;
+    list-style: none;
+}
+.TeamList .separator {
+    margin: 0rem 1rem 0rem .8rem;
 }
 
 .TeamItem {
@@ -167,10 +171,10 @@ html {
     margin-right: .2rem;
 }
 
-.TeamItem:last-child .team {
+.TeamItem:nth-child(3) .team {
     margin-left: 1.2rem;
 }
 
-.TeamItem:last-child .score {
+.TeamItem:nth-child(3).score {
     margin-left: .2rem;
 }
