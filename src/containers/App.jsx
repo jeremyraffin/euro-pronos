@@ -28,16 +28,16 @@ class App extends Component {
     }
 
     renderChildrenWithProps() {
-        const { userId, userData, matchs, children, dispatch } = this.props;
+        const { userId, userData, matchs, matchsByDate, children, dispatch } = this.props;
         const childrensProps = {
             Bets: {
                 bets: userData.bets,
                 score: userData.score,
-                matchs,
+                matchsByDate,
                 handleChange: (newUserData) => dispatch(setUserData(userId, newUserData))
             },
             Calendar: {
-                matchs,
+                matchsByDate,
             },
             Ranking: {}
         };
@@ -87,6 +87,7 @@ const mapDispatchToProps = (dispatch) => {
 function mapStateToProps(state) {
     return {
         matchs: state.appState.matchs,
+        matchsByDate: state.appState.matchsByDate,
         authenticated: state.appState.authenticated,
         userData: state.appState.userData,
         userId: state.appState.id,

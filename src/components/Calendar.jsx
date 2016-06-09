@@ -6,37 +6,27 @@ import Day from './partials/Day.jsx';
 import MatchList from './partials/MatchList.jsx';
 
 export default function Calendar(props) {
-    const { matchs } = props;
-
-    let dates = [];
-
-    if (matchs) {
-        dates = ([...new Set(matchs.map(match =>
-            moment(match.date).format('L')
-        ))].map(date =>
-            matchs.filter(match => moment(match.date).format('L') === date)
-        ));
-    }
+    const { matchsByDate } = props;
     return (
         <div className="Calendar">
             {
-                dates.length > 0 ?
-                    dates.map(date => {
+                matchsByDate.length > 0 ?
+                    matchsByDate.map(date => {
                         return (
                             <Day key={date[0].date} date={date[0].date}>
                                 <MatchList matchs={date} />
                             </Day>
                         );
-                }) : 'Loading'
+                    }) : 'Loading'
             }
         </div>
     );
 }
 
 Calendar.defaultProps = {
-    matchs: []
+    matchsByDate: []
 };
 
 Calendar.propTypes = {
-    matchs: PropTypes.arrayOf(PropTypes.object)
+    matchsByDate: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
 };
