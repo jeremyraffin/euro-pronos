@@ -3,7 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import moment from 'moment';
 moment.locale('fr');
 
-import { SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS, SET_APP_DATA, SET_USER_DATA } from './actions.js';
+import { SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS, SET_APP_DATA, SET_USER_DATA, SET_SCORE_BY_USER } from './actions.js';
 
 const initialState = {
     authenticated: false,
@@ -11,6 +11,7 @@ const initialState = {
     displayName: null,
     matchs: null,
     matchsByDate: [],
+    scoreByUser: [],
     userData: {
         bets: [],
         score: 0,
@@ -73,6 +74,10 @@ export default function appState(state = initialState, {type, payload}) {
     case SET_USER_DATA:
         return Object.assign({}, state, {
             userData: Object.assign({}, payload, {score: computeUserScore(state.matchs, payload.bets)})
+        });
+    case SET_SCORE_BY_USER:
+        return Object.assign({}, state, {
+            scoreByUser: payload
         });
     default:
         return state;

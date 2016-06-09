@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAppData, getUserData, setUserData, signInWithGoogle, signOut } from '../actions.js';
+import { getAppData, getUserData, getScoreByUser, setUserData, signInWithGoogle, signOut } from '../actions.js';
 import NavBar from '../components/NavBar.jsx';
 
 import 'normalize-css';
@@ -13,8 +13,9 @@ class App extends Component {
     }
 
     componentWillMount() {
-        const { authenticated, userId } = this.props;
-        this.props.getAppData();
+        const { authenticated, userId, dispatch } = this.props;
+        dispatch(getAppData());
+        dispatch(getScoreByUser());
         if (authenticated) {
             this.props.getUserData(userId);
         }
@@ -28,7 +29,7 @@ class App extends Component {
     }
 
     renderChildrenWithProps() {
-        const { userId, userData, matchs, matchsByDate, children, dispatch } = this.props;
+        const { userId, userData, matchs, matchsByDate, scoreByUser, children, dispatch } = this.props;
         const childrensProps = {
             Bets: {
                 bets: userData.bets,
@@ -74,12 +75,6 @@ const mapDispatchToProps = (dispatch) => {
         signOut: () => {
             dispatch(signOut());
         },
-        getAppData: () => {
-            dispatch(getAppData());
-        },
-        getUserData: (uuid) => {
-            dispatch(getUserData(uuid));
-        },
         dispatch
     };
 };
@@ -88,6 +83,7 @@ function mapStateToProps(state) {
     return {
         matchs: state.appState.matchs,
         matchsByDate: state.appState.matchsByDate,
+        scoreByUser: state.appState.scoreByUser,
         authenticated: state.appState.authenticated,
         userData: state.appState.userData,
         userId: state.appState.id,
