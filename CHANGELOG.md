@@ -2,6 +2,19 @@
 
 ---
 
+## v0.1.8
+
+**Author**: Guillaume Mousnier
+
+**Type**: Feature
+
+**Changes**:
+- Ajout des dates dans Bets et refactor
+
+
+
+---
+
 ## v0.1.7
 
 **Author**: Guillaume Mousnier
