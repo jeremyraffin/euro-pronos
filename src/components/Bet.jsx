@@ -39,7 +39,7 @@ export default function Bet(props) {
                             disabled={betIsClosed} />
                     </span>
                 </li>
-                -
+                <span className="separator">-</span>
                 <li className="TeamItem">
                     <span className="score">
                         <input
