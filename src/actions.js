@@ -7,6 +7,7 @@ export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
 export const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS';
 export const SET_APP_DATA = 'SET_APP_DATA';
 export const SET_USER_DATA = 'SET_USER_DATA';
+export const SET_SCORE_BY_USER = 'SET_SCORE_BY_USER';
 
 const config = {
     apiKey: 'AIzaSyBfcrOgYzrNomUuBtOGb3pctnG09P-GmTE',
@@ -29,6 +30,22 @@ export function getAppData() {
         firebase.database().ref('/matchs/')
             .on('value', result => {
                 dispatch(setAppData(result.val()));
+            });
+    };
+}
+
+export function setScoreByUser(newScoreByUser) {
+    return {
+        type: SET_SCORE_BY_USER,
+        payload: newScoreByUser
+    };
+}
+
+export function getScoreByUser() {
+    return dispatch => {
+        firebase.database().ref('/users/')
+            .on('value', result => {
+                dispatch(setScoreByUser(Object.entries(result.val()).map(user => ({id: user[0], score: user[1].score}))));
             });
     };
 }
