@@ -9,8 +9,12 @@ function getBetByMatch(match, bets) {
     }
     return {
         id: match.id,
-        team1: {},
-        team2: {}
+        team1: {
+            score: ''
+        },
+        team2: {
+            score: ''
+        }
     };
 }
 

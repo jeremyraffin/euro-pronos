@@ -2,6 +2,19 @@
 
 ---
 
+## v0.1.7
+
+**Author**: Guillaume Mousnier
+
+**Type**: Feature
+
+**Changes**:
+- Ajout d'un checkdate sur les paris (ils se ferment à H - 1)
+
+
+
+---
+
 ## v0.1.6
 
 **Author**: Guillaume Mousnier
