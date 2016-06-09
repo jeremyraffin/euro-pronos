@@ -2,6 +2,18 @@
 
 ---
 
+## v0.1.9
+
+**Author**: Guillaume Mousnier
+
+**Type**: Feature
+
+**Changes**:
+- Ajout de la récupération des scores par utilisateurs pour le classement
+
+
+---
+
 ## v0.1.8
 
 **Author**: Guillaume Mousnier
