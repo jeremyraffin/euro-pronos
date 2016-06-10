@@ -3,7 +3,6 @@ import moment from 'moment';
 moment.locale('fr');
 
 export default function MatchItem(props) {
-
     return (
         <li key={props.match.date} className="MatchItem">
             <time dateTime={moment(props.match.date).format('LT')}>
@@ -15,13 +14,13 @@ export default function MatchItem(props) {
                         {props.match.team1.name}
                     </span>
                     <span className="score">
-                        {props.match.team1.score ? props.match.team1.score : ''}
+                        { Number.isInteger(props.match.team1.score) ? props.match.team1.score : '' }
                     </span>
                 </li>
                 -
                 <li className="TeamItem">
                     <span className="score">
-                        {props.match.team2.score ? props.match.team2.score : ''}
+                        { Number.isInteger(props.match.team2.score) ? props.match.team2.score : '' }
                     </span>
                     <span className="team">
                         {props.match.team2.name}

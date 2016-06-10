@@ -27,8 +27,12 @@ function isPartialBetMatching(bet, match) {
     return Math.sign(match.team1.score - match.team1.score) === Math.sign(bet.team1.score - bet.team2.score);
 }
 
+function checkDate(matchDate) {
+    return moment() >= moment(matchDate);
+}
+
 function computeMatchScore(bet, match) {
-    if (match.team1.score && match.team2.score) {
+    if (checkDate(match.date) && match.team1.score && match.team2.score) {
         if (isPerfectBetMatching(bet, match)) {
             return 3;
         } else if (isPartialBetMatching(bet, match)) {
