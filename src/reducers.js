@@ -77,7 +77,7 @@ export default function appState(state = initialState, {type, payload}) {
         });
     case SET_SCORE_BY_USER:
         return Object.assign({}, state, {
-            scoreByUser: payload
+            scoreByUser: payload.sort((p, n) => p - n)
         });
     default:
         return state;
