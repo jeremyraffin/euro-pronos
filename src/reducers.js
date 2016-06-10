@@ -8,13 +8,14 @@ import { SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS, SET_APP_DATA, SET_USER_DATA, SET_SCO
 const initialState = {
     authenticated: false,
     id: null,
-    displayName: null,
-    matchs: null,
+    matchs: [],
     matchsByDate: [],
     scoreByUser: [],
     userData: {
         bets: [],
         score: 0,
+        avatar: null,
+        displayName: null,
     },
 };
 
@@ -56,7 +57,6 @@ export default function appState(state = initialState, {type, payload}) {
         return Object.assign({}, state, {
             authenticated: true,
             id: payload.uid,
-            displayName: payload.displayName
         });
     case SIGN_OUT_SUCCESS:
         return Object.assign({}, state, {
@@ -73,7 +73,7 @@ export default function appState(state = initialState, {type, payload}) {
         });
     case SET_USER_DATA:
         return Object.assign({}, state, {
-            userData: Object.assign({}, payload, {score: computeUserScore(state.matchs, payload.bets)})
+            userData: Object.assign({}, state.userData, payload, {score: computeUserScore(state.matchs, payload.bets)})
         });
     case SET_SCORE_BY_USER:
         return Object.assign({}, state, {

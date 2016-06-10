@@ -19,25 +19,25 @@ function getBetByMatch(match, bets) {
     };
 }
 
-function mergeBets(bets, match, score, newBet) {
-    return {bets: [...bets.filter(bet => bet.id !== match.id), newBet], score};
+function mergeBets(userData, match, newBet) {
+    return {bets: [...userData.bets.filter(bet => bet.id !== match.id), newBet], score: userData.score, displayName: userData.displayName, avatar: userData.avatar};
 }
 
 export default function Bets(props) {
-    const { matchsByDate, bets, score, handleChange } = props;
+    const { matchsByDate, userData, handleChange } = props;
 
     return (
         <div>
             <h2>Bets</h2>
-            <div>score: {score}</div>
+            <div>score: {userData.score}</div>
             <div>
                 {
                     matchsByDate.map(date => (
                             <Day key={date[0].date} date={date[0].date}>
                                 {date.map(match => (
                                     <Bet match={match}
-                                        bet={getBetByMatch(match, bets)}
-                                        handleChange={(newBet) => handleChange(mergeBets(bets, match, score, newBet))} />
+                                        bet={getBetByMatch(match, userData.bets)}
+                                        handleChange={(newBet) => handleChange(mergeBets(userData, match, newBet))} />
                                 ))}
                             </Day>
                         )
@@ -50,14 +50,12 @@ export default function Bets(props) {
 
 Bets.defaultProps = {
     matchsByDate: [],
-    score: 0,
-    bets: [],
+    userData: {},
     handleChange: () => {}
 };
 
 Bets.propTypes = {
     matchsByDate: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
-    score: PropTypes.number,
-    bets: PropTypes.arrayOf(PropTypes.object),
+    userData: PropTypes.object,
     handleChange: PropTypes.func
 };

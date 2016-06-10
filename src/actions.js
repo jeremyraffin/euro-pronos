@@ -55,6 +55,7 @@ export function updateUserData(userId, userData) {
 }
 
 export function setUserData(userId, newUserData) {
+    console.log(newUserData)
     updateUserData(userId, newUserData);
     return {
         type: SET_USER_DATA,
@@ -62,12 +63,12 @@ export function setUserData(userId, newUserData) {
     };
 }
 
-export function getUserData(userId) {
+export function getUserData(userId, displayName, avatar) {
     return dispatch => {
         firebase.database().ref(`/users/${userId}`)
             .once('value')
             .then(result => {
-                const userData = Object.is(result.val(), null) ? {bets: [], score: 0} : result.val();
+                const userData = Object.is(result.val(), null) ? {bets: [], score: 0, displayName, avatar} : result.val();
                 dispatch(setUserData(userId, userData));
             }).catch(error => {
                 console.log(error);
@@ -83,7 +84,6 @@ export function signInError(error) {
 }
 
 export function signInSuccess(userCredentials) {
-    console.log(userCredentials);
     return {
         type: SIGN_IN_SUCCESS,
         payload: userCredentials
@@ -101,7 +101,7 @@ export function signInWithGoogle() {
     return dispatch => {
         firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
             .then(result => {
-                dispatch(getUserData(result.user.uid));
+                dispatch(getUserData(result.user.uid, result.user.displayName, result.user.photoURL));
                 dispatch(signInSuccess(result.user));
             }).catch(error => {
                 dispatch(signInError(error));

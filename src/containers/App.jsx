@@ -17,23 +17,26 @@ class App extends Component {
         dispatch(getAppData());
         dispatch(getScoreByUser());
         if (authenticated) {
-            this.props.getUserData(userId);
+            dispatch(getUserData(userId));
         }
     }
 
     compononentWillReceiveProps(nextProps) {
-        const { userData, dispatch } = this.props;
+        const { userData, userId, dispatch } = this.props;
+        if (nextProps.userId !== userId) {
+            dispatch(getUserData(nextProps.userId));
+        }
         if (nextProps.userData.score !== userData.score) {
             dispatch(setUserData(nextProps.userId, nextProps.userData));
         }
+
     }
 
     renderChildrenWithProps() {
         const { userId, userData, matchs, matchsByDate, scoreByUser, children, dispatch } = this.props;
         const childrensProps = {
             Bets: {
-                bets: userData.bets,
-                score: userData.score,
+                userData,
                 matchsByDate,
                 handleChange: (newUserData) => dispatch(setUserData(userId, newUserData))
             },
@@ -42,8 +45,7 @@ class App extends Component {
             },
             Ranking: {}
         };
-
-        return React.cloneElement(this.props.children, {...childrensProps[children.type.name]});
+        return React.cloneElement(children, {...childrensProps[children.type.name]});
     }
 
     render() {
@@ -56,7 +58,7 @@ class App extends Component {
                         <span>pronos</span>
                     </h1>
                         <NavBar authenticated={authenticated}
-                            signout={this.props.signOut}
+                            signOut={this.props.signOut}
                             signInWithGoogle={this.props.signInWithGoogle} />
                 </header>
                 <main className="Main">
