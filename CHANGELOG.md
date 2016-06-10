@@ -2,6 +2,19 @@
 
 ---
 
+## v0.2.0
+
+**Author**: Guillaume Mousnier | Jeremy Raffin
+
+**Type**: Feature
+
+**Changes**:
+- Ajout de Ranking
+- Correction de bugs divers
+
+
+---
+
 ## v0.1.9
 
 **Author**: Guillaume Mousnier
