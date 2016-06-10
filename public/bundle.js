@@ -20694,7 +20694,7 @@
 	}
 
 	function checkDate(matchDate) {
-	    return (0, _moment2.default)() >= (0, _moment2.default)(matchDate);
+	    return (0, _moment2.default)().subtract(3, 'hour') >= (0, _moment2.default)(matchDate);
 	}
 
 	function computeMatchScore(bet, match) {
@@ -20708,7 +20708,9 @@
 	    return 0;
 	}
 
-	function computeUserScore(matchs, bets) {
+	function computeUserScore(matchs) {
+	    var bets = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+
 	    var scoreByBet = bets.map(function (bet) {
 	        return computeMatchScore(bet, matchs.find(function (match) {
 	            return match.id === bet.id;
@@ -20760,8 +20762,11 @@
 	            });
 	        case _actions.SET_SCORE_BY_USER:
 	            return (0, _assign2.default)({}, state, {
-	                scoreByUser: payload.sort(function (p, n) {
-	                    return p - n;
+	                scoreByUser: payload.map(function (user) {
+	                    user.score = computeUserScore(state.matchs, user.bets);
+	                    return user;
+	                }).sort(function (prevUser, nextUser) {
+	                    return prevUser.score - nextUser.score;
 	                })
 	            });
 	        default:
@@ -36594,7 +36599,7 @@
 	    return function (dispatch) {
 	        _firebase2.default.database().ref('/users/').on('value', function (result) {
 	            dispatch(setScoreByUser((0, _entries2.default)(result.val()).map(function (user) {
-	                return { id: user[0], score: user[1].score };
+	                return (0, _extends3.default)({}, user[1]);
 	            })));
 	        });
 	    };
@@ -36605,7 +36610,6 @@
 	}
 
 	function setUserData(userId, newUserData) {
-	    console.log(newUserData);
 	    updateUserData(userId, newUserData);
 	    return {
 	        type: SET_USER_DATA,
@@ -36648,7 +36652,9 @@
 	function signInWithGoogle() {
 	    return function (dispatch) {
 	        _firebase2.default.auth().signInWithPopup(new _firebase2.default.auth.GoogleAuthProvider()).then(function (result) {
-	            dispatch(getUserData(result.user.uid, result.user.displayName, result.user.photoURL));
+	            var displayName = result.user.displayName ? result.user.displayName : result.user.email.split('@')[0];
+	            var avatar = result.user.photoURL ? result.user.photoURL : 'https://image.freepik.com/icones-gratuites/tete-chauve-avec-point-d&-39;interrogation_318-49294.jpg';
+	            dispatch(getUserData(result.user.uid, displayName, avatar));
 	            dispatch(signInSuccess(result.user));
 	        }).catch(function (error) {
 	            dispatch(signInError(error));
@@ -54422,7 +54428,9 @@
 	                Calendar: {
 	                    matchsByDate: matchsByDate
 	                },
-	                Ranking: {}
+	                Ranking: {
+	                    scoreByUser: scoreByUser
+	                }
 	            };
 	            return _react2.default.cloneElement(children, (0, _extends3.default)({}, childrensProps[children.type.name]));
 	        }
@@ -55161,12 +55169,12 @@
 	                _react2.default.createElement(
 	                    'span',
 	                    { className: 'team' },
-	                    props.match.team1.name
+	                    props.match.team1 ? props.match.team1.name : ''
 	                ),
 	                _react2.default.createElement(
 	                    'span',
 	                    { className: 'score' },
-	                    (0, _isInteger2.default)(props.match.team1.score) ? props.match.team1.score : ''
+	                    props.match.team1 && (0, _isInteger2.default)(props.match.team1.score) ? props.match.team1.score : ''
 	                )
 	            ),
 	            '-',
@@ -55176,12 +55184,12 @@
 	                _react2.default.createElement(
 	                    'span',
 	                    { className: 'score' },
-	                    (0, _isInteger2.default)(props.match.team2.score) ? props.match.team2.score : ''
+	                    props.match.team2 && (0, _isInteger2.default)(props.match.team2.score) ? props.match.team2.score : ''
 	                ),
 	                _react2.default.createElement(
 	                    'span',
 	                    { className: 'team' },
-	                    props.match.team2.name
+	                    props.match.team2 ? props.match.team2.name : ''
 	                )
 	            )
 	        ),
@@ -55283,6 +55291,11 @@
 	            'Bets'
 	        ),
 	        _react2.default.createElement(
+	            'p',
+	            null,
+	            'Les scores doivent être enregistrés au plus tard 1h avant le début de la rencontre'
+	        ),
+	        _react2.default.createElement(
 	            'div',
 	            null,
 	            'score: ',
@@ -55358,6 +55371,8 @@
 	var _moment2 = _interopRequireDefault(_moment);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_moment2.default.locale('fr');
 
 	function mergeBet(event, oldBet, match) {
 	    var score = (0, _parseInt2.default)(event.target.value.trim(), 0);
@@ -55586,21 +55601,57 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Ranking() {
-
+	function Ranking(props) {
 	    return _react2.default.createElement(
 	        'div',
-	        null,
-	        'Ranking'
+	        { style: { display: 'flex', flexDirection: 'column', alignItems: 'center' } },
+	        _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Classement des joueurs'
+	        ),
+	        _react2.default.createElement(
+	            'ul',
+	            { className: 'MatchList' },
+	            props.scoreByUser.map(function (user) {
+	                return _react2.default.createElement(
+	                    'li',
+	                    { key: user.displayName, className: 'MatchItem' },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        { className: 'TeamList' },
+	                        _react2.default.createElement(
+	                            'li',
+	                            { className: 'TeamItem' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'team' },
+	                                _react2.default.createElement('img', { src: user.avatar, width: '40px' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'team' },
+	                                user.displayName
+	                            ),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'score' },
+	                                user.score
+	                            )
+	                        )
+	                    )
+	                );
+	            })
+	        )
 	    );
 	}
 
 	Ranking.defaultProps = {
-	    color: 'black'
+	    scoreByUser: []
 	};
 
 	Ranking.propTypes = {
-	    color: _react.PropTypes.string
+	    scoreByUser: _react.PropTypes.arrayOf(_react.PropTypes.object)
 	};
 
 /***/ }

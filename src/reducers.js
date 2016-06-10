@@ -28,7 +28,7 @@ function isPartialBetMatching(bet, match) {
 }
 
 function checkDate(matchDate) {
-    return moment() >= moment(matchDate);
+    return moment().subtract(3, 'hour') >= moment(matchDate);
 }
 
 function computeMatchScore(bet, match) {
@@ -81,7 +81,10 @@ export default function appState(state = initialState, {type, payload}) {
         });
     case SET_SCORE_BY_USER:
         return Object.assign({}, state, {
-            scoreByUser: payload.sort((p, n) => p - n)
+            scoreByUser: payload.map(user => {
+                user.score = computeUserScore(state.matchs, user.bets);
+                return user;
+            }).sort((prevUser, nextUser) => prevUser.score - nextUser.score)
         });
     default:
         return state;

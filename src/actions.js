@@ -45,7 +45,7 @@ export function getScoreByUser() {
     return dispatch => {
         firebase.database().ref('/users/')
             .on('value', result => {
-                dispatch(setScoreByUser(Object.entries(result.val()).map(user => ({displayName: user[1].displayName, avatar: user[1].avatar, score: user[1].score}))));
+                dispatch(setScoreByUser(Object.entries(result.val()).map(user => ({...user[1]}))));
             });
     };
 }
