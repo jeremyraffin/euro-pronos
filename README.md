@@ -1,4 +1,4 @@
 # euro-pronos
-#### Current version: 0.1.9
+#### Current version: 0.2.0
 
 ## License MIT
