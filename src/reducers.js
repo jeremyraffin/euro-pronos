@@ -24,7 +24,7 @@ function isPerfectBetMatching(bet, match) {
 }
 
 function isPartialBetMatching(bet, match) {
-    return Math.sign(match.team1.score - match.team1.score) === Math.sign(bet.team1.score - bet.team2.score);
+    return Math.sign(match.team1.score - match.team2.score) === Math.sign(bet.team1.score - bet.team2.score);
 }
 
 function checkDate(matchDate) {
@@ -32,7 +32,7 @@ function checkDate(matchDate) {
 }
 
 function computeMatchScore(bet, match) {
-    if (checkDate(match.date) && match.team1.score && match.team2.score) {
+    if (checkDate(match.date) && Number.isInteger(match.team1.score) && Number.isInteger(match.team2.score)) {
         if (isPerfectBetMatching(bet, match)) {
             return 3;
         } else if (isPartialBetMatching(bet, match)) {
@@ -84,7 +84,7 @@ export default function appState(state = initialState, {type, payload}) {
             scoreByUser: payload.map(user => {
                 user.score = computeUserScore(state.matchs, user.bets);
                 return user;
-            }).sort((prevUser, nextUser) => prevUser.score - nextUser.score)
+            }).sort((prevUser, nextUser) => prevUser.score - nextUser.score).reverse()
         });
     default:
         return state;
