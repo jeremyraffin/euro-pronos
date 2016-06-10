@@ -29,7 +29,6 @@ class App extends Component {
         if (nextProps.userData.score !== userData.score) {
             dispatch(setUserData(nextProps.userId, nextProps.userData));
         }
-
     }
 
     renderChildrenWithProps() {
@@ -43,7 +42,9 @@ class App extends Component {
             Calendar: {
                 matchsByDate,
             },
-            Ranking: {}
+            Ranking: {
+                scoreByUser
+            }
         };
         return React.cloneElement(children, {...childrensProps[children.type.name]});
     }

@@ -29,6 +29,7 @@ export default function Bets(props) {
     return (
         <div>
             <h2>Bets</h2>
+            <p>Les scores doivent être enregistrés au plus tard 1h avant le début de la rencontre</p>
             <div>score: {userData.score}</div>
             <div>
                 {

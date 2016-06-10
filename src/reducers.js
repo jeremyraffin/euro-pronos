@@ -42,7 +42,7 @@ function computeMatchScore(bet, match) {
     return 0;
 }
 
-function computeUserScore(matchs, bets) {
+function computeUserScore(matchs, bets = []) {
     const scoreByBet = bets.map(bet => computeMatchScore(bet, matchs.find(match => match.id === bet.id)));
     return scoreByBet.reduce((n, v) => n + v, 0);
 }

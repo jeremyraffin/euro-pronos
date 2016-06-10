@@ -45,7 +45,7 @@ export function getScoreByUser() {
     return dispatch => {
         firebase.database().ref('/users/')
             .on('value', result => {
-                dispatch(setScoreByUser(Object.entries(result.val()).map(user => ({id: user[0], score: user[1].score}))));
+                dispatch(setScoreByUser(Object.entries(result.val()).map(user => ({displayName: user[1].displayName, avatar: user[1].avatar, score: user[1].score}))));
             });
     };
 }
@@ -55,7 +55,6 @@ export function updateUserData(userId, userData) {
 }
 
 export function setUserData(userId, newUserData) {
-    console.log(newUserData)
     updateUserData(userId, newUserData);
     return {
         type: SET_USER_DATA,
@@ -101,7 +100,9 @@ export function signInWithGoogle() {
     return dispatch => {
         firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
             .then(result => {
-                dispatch(getUserData(result.user.uid, result.user.displayName, result.user.photoURL));
+                const displayName = result.user.displayName ? result.user.displayName : result.user.email.split('@')[0];
+                const avatar = result.user.photoURL ? result.user.photoURL : 'https://image.freepik.com/icones-gratuites/tete-chauve-avec-point-d&-39;interrogation_318-49294.jpg';
+                dispatch(getUserData(result.user.uid, displayName, avatar));
                 dispatch(signInSuccess(result.user));
             }).catch(error => {
                 dispatch(signInError(error));

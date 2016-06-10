@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
+moment.locale('fr');
 
 function mergeBet(event, oldBet, match) {
     const score = Number.parseInt(event.target.value.trim(), 0);

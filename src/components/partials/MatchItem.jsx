@@ -11,19 +11,19 @@ export default function MatchItem(props) {
             <ul className="TeamList">
                 <li className="TeamItem">
                     <span className="team">
-                        {props.match.team1.name}
+                        {props.match.team1 ? props.match.team1.name : ''}
                     </span>
                     <span className="score">
-                        { Number.isInteger(props.match.team1.score) ? props.match.team1.score : '' }
+                        { props.match.team1 && Number.isInteger(props.match.team1.score) ? props.match.team1.score : '' }
                     </span>
                 </li>
                 -
                 <li className="TeamItem">
                     <span className="score">
-                        { Number.isInteger(props.match.team2.score) ? props.match.team2.score : '' }
+                        { props.match.team2 && Number.isInteger(props.match.team2.score) ? props.match.team2.score : '' }
                     </span>
                     <span className="team">
-                        {props.match.team2.name}
+                        {props.match.team2 ? props.match.team2.name : ''}
                     </span>
                 </li>
             </ul>
