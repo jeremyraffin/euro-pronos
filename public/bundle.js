@@ -20694,7 +20694,7 @@
 	}
 
 	function checkDate(matchDate) {
-	    return (0, _moment2.default)().subtract(3, 'hour') >= (0, _moment2.default)(matchDate);
+	    return (0, _moment2.default)().subtract(2, 'hour') >= (0, _moment2.default)(matchDate);
 	}
 
 	function computeMatchScore(bet, match) {

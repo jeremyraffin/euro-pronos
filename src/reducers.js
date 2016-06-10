@@ -28,7 +28,7 @@ function isPartialBetMatching(bet, match) {
 }
 
 function checkDate(matchDate) {
-    return moment().subtract(3, 'hour') >= moment(matchDate);
+    return moment().subtract(2, 'hour') >= moment(matchDate);
 }
 
 function computeMatchScore(bet, match) {
