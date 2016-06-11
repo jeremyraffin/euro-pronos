@@ -10,6 +10,8 @@ html {
 
 body, .App, #app, #app > div, .Main {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .App {
