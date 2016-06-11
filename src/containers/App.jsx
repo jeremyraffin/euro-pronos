@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { IndexLink } from 'react-router';
+
 import { getAppData, getUserData, getScoreByUser, setUserData, signInWithGoogle, signOut } from '../actions.js';
 import NavBar from '../components/NavBar.jsx';
 
@@ -55,8 +57,10 @@ class App extends Component {
             <div className="App">
                 <header className="Header">
                     <h1 className="Logo">
-                        <span>euro</span>
-                        <span>pronos</span>
+                        <IndexLink activeClassName="active" to="/">
+                            <span>euro</span>
+                            <span>pronos</span>
+                        </IndexLink>
                     </h1>
                         <NavBar authenticated={authenticated}
                             signOut={this.props.signOut}

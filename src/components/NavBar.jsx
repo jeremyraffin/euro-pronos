@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { IndexLink, Link } from 'react-router';
+import { Link } from 'react-router';
 
 export default function NavBar(props) {
     const { signInWithGoogle, authenticated, signOut } = props;
@@ -7,9 +7,6 @@ export default function NavBar(props) {
     return (
         <nav className="NavBar">
             <ul>
-                <li>
-                    <IndexLink activeClassName="active" to="/">Calendrier</IndexLink>
-                </li>
                 {
                     authenticated ?
                         <li><Link activeClassName="active" to="/bets">Pronos</Link> </li>

@@ -11,7 +11,7 @@ export default function MatchList(props) {
             {
                 props.matchs.map(match => {
                     return (
-                        <MatchItem match={match} />
+                        <MatchItem key={match.date} match={match} />
                     )
                 })
             }
