@@ -9,17 +9,31 @@ export default function NavBar(props) {
             <ul>
                 {
                     authenticated ?
-                        <li><Link activeClassName="active" to="/bets">Pronos</Link> </li>
+                        <li>
+                            <Link activeClassName="active" to="/bets" title="Mes pronos">
+                                <span className="icon-futbol-o"></span>
+                                Pronos
+                            </Link>
+                        </li>
                         : ''
                 }
                 <li>
-                    <Link activeClassName="active" to="/ranking">Classement</Link>
+                    <Link activeClassName="active" to="/ranking" title="Classement">
+                        <span className="icon-trophy"></span>
+                        Classement
+                    </Link>
                 </li>
                 <li>
                     {
                         authenticated ?
-                            <button onClick={signOut} type="button">Logout</button>
-                            : <button onClick={signInWithGoogle} type="button">Login</button>
+                            <button onClick={signOut} type="button" title="Sign out">
+                                <span className="icon-sign-out"></span>
+                                Logout
+                            </button>
+                            : <button onClick={signInWithGoogle} type="button" title="Sign in">
+                                <span className="icon-sign-in"></span>
+                                Login
+                            </button>
                     }
                 </li>
             </ul>

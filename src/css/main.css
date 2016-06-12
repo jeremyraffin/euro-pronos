@@ -8,35 +8,100 @@ html {
     height: 100%;
 }
 
-body, .App, #app, #app > div, .Main {
+body,
+.App,
+#app,
+#app > div,
+.Main {
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+/* Icons */
+
+@font-face {
+    font-family: 'icomoon';
+    src:    url('./icomoon/fonts/icomoon.eot');
+    src:    url('./icomoon/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+    url('./icomoon/fonts/icomoon.ttf') format('truetype'),
+    url('./icomoon/fonts/icomoon.woff') format('woff'),
+    url('./icomoon/fonts/icomoon.svg?#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-check-circle-o:before {
+    content: "\f05d";
+}
+.icon-sign-out:before {
+    content: "\f08b";
+}
+.icon-sign-in:before {
+    content: "\f090";
+}
+.icon-trophy:before {
+    content: "\f091";
+}
+.icon-futbol-o:before {
+    content: "\f1e3";
+}
+.icon-soccer-ball-o:before {
+    content: "\f1e3";
 }
 
 .App {
     font-family: 'Roboto', sans-serif;
 }
 
+/* Header */
+
 .Header {
-    background-color: #4CAF50;
-    color: white;
+    /* Box model */
+    height: 4rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 0rem 1rem;
-    height: 4rem;
+
+    /* Visual */
+    background-color: #4CAF50;
+
+    /* Typography */
+    color: white;
 }
 
 .Logo {
-    font-size: 1.2rem;
+    /* Box model */
+    margin: 0;
+
+    /* Typography */
+    font-size: 1rem;
     font-style: italic;
     text-transform: uppercase;
-    margin: 0;
 }
 
 .Logo a {
+    /* Visual */
+    outline: none;
+
+    /* Typography */
     color: white;
     text-decoration: none;
 }
@@ -49,11 +114,14 @@ body, .App, #app, #app > div, .Main {
     font-weight: 300;
 }
 
+/* NavBar */
+
 .NavBar {
     font-weight: 300;
 }
 
-.NavBar, .NavBar ul {
+.NavBar,
+.NavBar ul {
     display: flex;
     align-items: center;
     height: 100%;
@@ -61,11 +129,12 @@ body, .App, #app, #app > div, .Main {
 
 .NavBar ul {
     flex-direction: row;
-    list-style: none;
-    padding: 0;
     margin: 0;
-    height: 100%;
     margin-right: -1rem;
+    padding: 0;
+
+    /* Visual */
+    list-style: none;
 }
 
 .NavBar li {
@@ -74,42 +143,70 @@ body, .App, #app, #app > div, .Main {
 }
 
 .NavBar li a {
-    display: flex;
+    /* Box model */
     height: 100%;
-    padding: 0rem 1rem;
+    display: flex;
     align-items: center;
-    color: rgba(255, 255, 255, .8);
+    padding: 0rem 1.4rem;
+
+    /* Visual */
+    border-left: 1px solid rgba(255, 255, 255, .3);
+    outline: none;
     text-decoration: none;
-    font-size: .85rem;
-    text-transform: uppercase;
-    font-weight: 400;
+
+    /* Typography */
+    color: rgba(255, 255, 255, 1);
 }
 
-.NavBar li:hover a, .NavBar li:hover button, .NavBar li .active {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 1);
+.NavBar li a span:last-child,
+.NavBar li button span:last-child {
+    display: none;
+}
 
+.NavBar li a span[class^="icon"] {
+    font-size: 1.2rem;
+}
+
+.NavBar li:hover a,
+.NavBar li:hover button,
+.NavBar li .active {
+    /* Visual */
+    background-color: rgba(255, 255, 255, 0.2);
+
+    /* Typography */
+    color: rgba(255, 255, 255, 1);
 }
 
 .NavBar button {
+    /* Box model */
+    display: flex;
+    align-items: center;
+    padding: 0rem 1.4rem;
+    /* Visual */
     background-color: transparent;
     border: none;
-    color: rgba(255, 255, 255, .8);
-    padding: 0 1rem;
-    font-weight: 300;
-    font-size: .85rem;
-    text-transform: uppercase;
-    font-weight: 400;
+    border-left: 1px solid rgba(255, 255, 255, .3);
+    color: rgba(255, 255, 255, 1);
     outline: none;
+
+    /* Typography */
+    font-size: .85rem;
+    font-weight: 400;
+    text-transform: uppercase;
 }
+
+.NavBar li button span[class^="icon"] {
+    font-size: 1.2rem;
+}
+
+/* Main */
 
 .Main {
-    padding: 0rem 1rem;
     overflow-y: auto;
+    padding: 0rem 1rem;
 }
 
-.Calendar {
-}
+/* Calendar */
 
 .Day {
     padding: 2rem 0rem;
@@ -120,49 +217,68 @@ body, .App, #app, #app > div, .Main {
 }
 
 .Day h2 {
+    /* Box mode */
+    margin: 0;
+    padding-bottom: .4rem;
+
+    /* Visual */
+    border-bottom: 1px solid #eaeaea;
+
+    /* Typography */
     font-size: 1.1rem;
     font-weight: 500;
-    padding-bottom: .4rem;
-    border-bottom: 1px solid #eaeaea;
-    margin: 0;
 }
 
 .MatchList {
+    /* Box model */
     display: flex;
     flex-direction: column;
-    list-style: none;
     margin: 0;
     padding: 0;
 
+    /* Visual */
+    list-style: none;
 }
 
 .MatchItem {
+    /* Box model */
+    height: 3rem;
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid #eaeaea;
-    justify-content: space-between;
-    height: 3rem;
     align-items: center;
+    justify-content: space-between;
+
+    /* Visual */
+    border-bottom: 1px solid #eaeaea;
 }
 
 .MatchItem time {
+    /* Box model */
+    padding-left: .8rem;
+
+    /* Typography */
     color: #b2b2b2;
     font-size: .8rem;
     font-weight: 500;
-    padding-left: .8rem;
 }
 
 .MatchItem:first-child {
+    /* Box model */
     display: flex;
     flex-direction: row;
+
+    /* Visual */
     border-bottom: 1px solid #eaeaea;
 }
 
 .TeamList {
+    /* Box model */
     display: flex;
     flex-direction: row;
-    padding-left: 0;
     align-items: center;
+    padding-left: 0;
+
+    /* Visual */
     list-style: none;
 }
 .TeamList .separator {
@@ -176,7 +292,10 @@ body, .App, #app, #app > div, .Main {
 }
 
 .TeamItem .team {
+    /* Box model */
     width: 6rem;
+
+    /* Typograpgy */
     font-size: .9rem;
 }
 
@@ -185,9 +304,9 @@ body, .App, #app, #app > div, .Main {
 }
 
 .TeamItem:first-child .team {
-    margin-right: 1.2rem;
     display: flex;
     justify-content: flex-end;
+    margin-right: 1.2rem;
 }
 
 .TeamItem:first-child .score {
@@ -200,4 +319,39 @@ body, .App, #app, #app > div, .Main {
 
 .TeamItem:nth-child(3).score {
     margin-left: .2rem;
+}
+
+@media screen and (min-width: 600px) {
+    .Logo {
+        font-size: 1.1rem;
+    }
+
+    .NavBar li a,
+    .NavBar li button {
+        /* Box model */
+        padding: 0rem 1rem;
+
+        /* Visual */
+        border: none;
+
+        /* Typography */
+        color: rgba(255, 255, 255, .8);
+        font-size: .85rem;
+        text-transform: uppercase;
+        font-weight: 400;
+    }
+
+    .NavBar li a span:last-child,
+    .NavBar li button span:last-child {
+        display: block;
+    }
+
+    .NavBar li a span[class^="icon"],
+    .NavBar li button span[class^="icon"] {
+        /* Box model */
+        padding-right: .5rem;
+
+        /* Typography */
+        font-size: .85rem;
+    }
 }

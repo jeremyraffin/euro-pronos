@@ -31,6 +31,7 @@
     "express": "^4.13.3",
     "extend-tape": "^1.2.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
     "isomorphic-fetch": "^2.2.0",
     "react-addons-test-utils": "^15.0.2",
     "react-transform-catch-errors": "^1.0.0",
