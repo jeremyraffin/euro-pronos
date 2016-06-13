@@ -18,10 +18,6 @@ export default function Day(props) {
     );
 }
 
-Day.defaultProps = {
-
-};
-
 Day.propTypes = {
-
+    date: PropTypes.string,
 };

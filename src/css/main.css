@@ -281,9 +281,6 @@ body,
     /* Visual */
     list-style: none;
 }
-.TeamList .separator {
-    margin: 0rem 1rem 0rem .8rem;
-}
 
 .TeamItem {
     display: flex;

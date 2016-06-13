@@ -17,59 +17,52 @@ function checkDate(matchDate) {
     return moment() >= moment(matchDate).subtract(1, 'hour');
 }
 
-export default function Bet(props) {
-    const { match, bet, handleChange } = props;
-    const betIsClosed = checkDate(match.date);
-    const onChange = betIsClosed ? () => {} : (event) => handleChange(mergeBet(event, bet, match));
+export default function BetItem(props) {
+
+    const betIsClosed = checkDate(props.match.date);
+    const onChange = betIsClosed ? () => {} : (event) => props.handleChange(mergeBet(event, props.bet, props.match));
     return (
-        <li key={match.date} className="MatchItem">
+        <li key={props.match.date} className="MatchItem">
             <time dateTime={moment(props.match.date).format('LT')}>
                 {moment(props.match.date).format('LT')}
             </time>
             <ul className="TeamList">
                 <li className="TeamItem">
                     <span className="team">
-                        {match.team1.name}
+                        {props.match.team1.name}
                     </span>
                     <span className="score">
                         <input
                             name="team1"
                             type="number"
-                            value={Number.isInteger(bet.team1.score) ? bet.team1.score : ''}
+                            value={Number.isInteger(props.bet.team1.score) ? props.bet.team1.score : ''}
                             onChange={onChange}
                             disabled={betIsClosed} />
                     </span>
                 </li>
-                <span className="separator">-</span>
+                -
                 <li className="TeamItem">
                     <span className="score">
                         <input
                             name="team2"
                             type="number"
-                            value={Number.isInteger(bet.team1.score) ? bet.team2.score : ''}
+                            value={Number.isInteger(props.bet.team1.score) ? props.bet.team2.score : ''}
                             onChange={onChange}
                             disabled={betIsClosed} />
                     </span>
                     <span className="team">
-                        {match.team2.name}
+                        {props.match.team2.name}
                     </span>
                 </li>
                 <li>
-                    { Number.isInteger(bet.team2.score) && Number.isInteger(bet.team1.score) ? <div style={{color: 'green'}}>Validated</div> : '' }
+                    { Number.isInteger(props.bet.team2.score) && Number.isInteger(props.bet.team1.score) ? <div style={{color: 'green'}}>Validated</div> : '' }
                 </li>
             </ul>
-            <span className="UserScore"></span>
         </li>
     );
 }
 
-Bet.defaultProps = {
-    match: {},
-    bet: {},
-    handleChange: () => {}
-};
-
-Bet.propTypes = {
+BetItem.propTypes = {
     match: PropTypes.object,
     bet: PropTypes.object,
     handleChange: PropTypes.func

@@ -32,10 +32,6 @@ export default function MatchItem(props) {
     );
 }
 
-MatchItem.defaultProps = {
-
-};
-
 MatchItem.propTypes = {
-
+    match: PropTypes.object,
 };

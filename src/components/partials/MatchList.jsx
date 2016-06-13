@@ -19,10 +19,6 @@ export default function MatchList(props) {
     );
 }
 
-MatchList.defaultProps = {
-
-};
-
 MatchList.propTypes = {
-
+    matchs: PropTypes.arrayOf(PropTypes.object)
 };
