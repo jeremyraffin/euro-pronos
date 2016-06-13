@@ -310,12 +310,37 @@ body,
     margin-right: .2rem;
 }
 
-.TeamItem:nth-child(3) .team {
+.TeamItem:last-child .team {
     margin-left: 1.2rem;
 }
 
-.TeamItem:nth-child(3).score {
+.TeamItem:last-child .score {
     margin-left: .2rem;
+}
+
+.TeamItem .score input {
+    /* Box model */
+    width: 2.5rem;
+    padding: 0 .1rem 0 .5rem;
+
+    /* Visual */
+    border: 1px solid #222;
+    border-radius: 3px;
+
+    /* Typography */
+    color: #222;
+}
+
+.TeamItem .score input[class="disabled"] {
+    /* Visual */
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+
+.Validation span[class^="icon"] {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #4CAF50;
 }
 
 @media screen and (min-width: 600px) {

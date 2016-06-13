@@ -28,35 +28,42 @@ export default function BetItem(props) {
             </time>
             <ul className="TeamList">
                 <li className="TeamItem">
-                    <span className="team">
+                    <label htmlFor={props.match.team1.name} className="team">
                         {props.match.team1.name}
-                    </span>
+                    </label>
                     <span className="score">
                         <input
+                            id={props.match.team1.name}
+                            className={betIsClosed ? 'disabled' : ''}
                             name="team1"
                             type="number"
+                            min="0"
                             value={Number.isInteger(props.bet.team1.score) ? props.bet.team1.score : ''}
                             onChange={onChange}
-                            disabled={betIsClosed} />
+                            disabled={betIsClosed}
+                        />
                     </span>
                 </li>
                 -
                 <li className="TeamItem">
                     <span className="score">
                         <input
+                            id={props.match.team2.name}
+                            className={betIsClosed ? 'disabled' : ''}
                             name="team2"
                             type="number"
+                            min="0"
                             value={Number.isInteger(props.bet.team1.score) ? props.bet.team2.score : ''}
                             onChange={onChange}
                             disabled={betIsClosed} />
                     </span>
-                    <span className="team">
+                    <label htmlFor={props.match.team2.name} className="team">
                         {props.match.team2.name}
-                    </span>
+                    </label>
                 </li>
             </ul>
-            <span>
-                { Number.isInteger(props.bet.team2.score) && Number.isInteger(props.bet.team1.score) ? <div style={{color: 'green'}}>Validated</div> : '' }
+            <span className="Validation">
+                { Number.isInteger(props.bet.team2.score) && Number.isInteger(props.bet.team1.score) ? <span className="icon-check-circle-o"></span> : '' }
             </span>
 
         </li>
