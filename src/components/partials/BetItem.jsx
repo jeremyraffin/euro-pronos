@@ -54,10 +54,11 @@ export default function BetItem(props) {
                         {props.match.team2.name}
                     </span>
                 </li>
-                <li>
-                    { Number.isInteger(props.bet.team2.score) && Number.isInteger(props.bet.team1.score) ? <div style={{color: 'green'}}>Validated</div> : '' }
-                </li>
             </ul>
+            <span>
+                { Number.isInteger(props.bet.team2.score) && Number.isInteger(props.bet.team1.score) ? <div style={{color: 'green'}}>Validated</div> : '' }
+            </span>
+
         </li>
     );
 }
