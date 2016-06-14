@@ -63,6 +63,7 @@ export function setUserData(userId, newUserData) {
 }
 
 export function getUserData(userId, displayName, avatar) {
+    localStorage.setItem('id', userId);
     return dispatch => {
         firebase.database().ref(`/users/${userId}`)
             .once('value')
@@ -83,13 +84,21 @@ export function signInError(error) {
 }
 
 export function signInSuccess(userCredentials) {
+    localStorage.setItem('id', userCredentials.uid);
     return {
         type: SIGN_IN_SUCCESS,
         payload: userCredentials
     };
 }
 
+export function initAuth() {
+    return {
+        type: INIT_AUTH
+    }
+}
+
 export function signOutSuccess() {
+    localStorage.removeItem('id');
     browserHistory.push('/');
     return {
         type: SIGN_OUT_SUCCESS
