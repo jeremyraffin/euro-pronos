@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import { browserHistory } from 'react-router';
 
-export const INIT_AUTH = 'INIT_AUTH';
+export const SIMULATE_AUTH = 'SIMULATE_AUTH';
 export const SIGN_IN_ERROR = 'SIGN_IN_ERROR';
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
 export const SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS';
@@ -91,10 +91,11 @@ export function signInSuccess(userCredentials) {
     };
 }
 
-export function initAuth() {
+export function simulateAuth(id) {
     return {
-        type: INIT_AUTH
-    }
+        type: SIMULATE_AUTH,
+        payload: id
+    };
 }
 
 export function signOutSuccess() {

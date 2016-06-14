@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { IndexLink } from 'react-router';
 
-import { getAppData, getUserData, getScoreByUser, setUserData, signInWithGoogle, signOut, initAuth } from '../actions.js';
+import { getAppData, getUserData, getScoreByUser, setUserData, signInWithGoogle, signOut, simulateAuth } from '../actions.js';
 import NavBar from '../components/NavBar.jsx';
 
 import 'normalize-css';
@@ -15,14 +15,13 @@ class App extends Component {
     }
 
     componentWillMount() {
-        const { authenticated, dispatch } = this.props;
+        const { dispatch } = this.props;
         dispatch(getAppData());
         dispatch(getScoreByUser());
         const userId = localStorage.getItem('id');
         if (userId) {
-            dispatch(initAuth());
+            dispatch(simulateAuth(userId));
             dispatch(getUserData(userId));
-            
         }
     }
 

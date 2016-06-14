@@ -18,7 +18,6 @@ function checkDate(matchDate) {
 }
 
 export default function BetItem(props) {
-
     const betIsClosed = checkDate(props.match.date);
     const onChange = betIsClosed ? () => {} : (event) => props.handleChange(mergeBet(event, props.bet, props.match));
     return (
@@ -53,7 +52,7 @@ export default function BetItem(props) {
                             name="team2"
                             type="number"
                             min="0"
-                            value={Number.isInteger(props.bet.team1.score) ? props.bet.team2.score : ''}
+                            value={Number.isInteger(props.bet.team2.score) ? props.bet.team2.score : ''}
                             onChange={onChange}
                             disabled={betIsClosed} />
                     </span>

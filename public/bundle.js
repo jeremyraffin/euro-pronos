@@ -20742,6 +20742,11 @@
 	    var payload = _ref.payload;
 
 	    switch (type) {
+	        case _actions.SIMULATE_AUTH:
+	            return (0, _assign2.default)({}, state, {
+	                authenticated: true,
+	                id: payload
+	            });
 	        case _actions.SIGN_IN_SUCCESS:
 	            return (0, _assign2.default)({}, state, {
 	                authenticated: true,
@@ -36558,7 +36563,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.SET_SCORE_BY_USER = exports.SET_USER_DATA = exports.SET_APP_DATA = exports.SIGN_OUT_SUCCESS = exports.SIGN_IN_SUCCESS = exports.SIGN_IN_ERROR = exports.INIT_AUTH = undefined;
+	exports.SET_SCORE_BY_USER = exports.SET_USER_DATA = exports.SET_APP_DATA = exports.SIGN_OUT_SUCCESS = exports.SIGN_IN_SUCCESS = exports.SIGN_IN_ERROR = exports.SIMULATE_AUTH = undefined;
 
 	var _is = __webpack_require__(381);
 
@@ -36581,6 +36586,7 @@
 	exports.getUserData = getUserData;
 	exports.signInError = signInError;
 	exports.signInSuccess = signInSuccess;
+	exports.simulateAuth = simulateAuth;
 	exports.signOutSuccess = signOutSuccess;
 	exports.signInWithGoogle = signInWithGoogle;
 	exports.signOut = signOut;
@@ -36593,7 +36599,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var INIT_AUTH = exports.INIT_AUTH = 'INIT_AUTH';
+	var SIMULATE_AUTH = exports.SIMULATE_AUTH = 'SIMULATE_AUTH';
 	var SIGN_IN_ERROR = exports.SIGN_IN_ERROR = 'SIGN_IN_ERROR';
 	var SIGN_IN_SUCCESS = exports.SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
 	var SIGN_OUT_SUCCESS = exports.SIGN_OUT_SUCCESS = 'SIGN_OUT_SUCCESS';
@@ -36655,6 +36661,7 @@
 	}
 
 	function getUserData(userId, displayName, avatar) {
+	    localStorage.setItem('id', userId);
 	    return function (dispatch) {
 	        _firebase2.default.database().ref('/users/' + userId).once('value').then(function (result) {
 	            var userData = (0, _is2.default)(result.val(), null) ? { bets: [], score: 0, displayName: displayName, avatar: avatar } : result.val();
@@ -36673,13 +36680,22 @@
 	}
 
 	function signInSuccess(userCredentials) {
+	    localStorage.setItem('id', userCredentials.uid);
 	    return {
 	        type: SIGN_IN_SUCCESS,
 	        payload: userCredentials
 	    };
 	}
 
+	function simulateAuth(id) {
+	    return {
+	        type: SIMULATE_AUTH,
+	        payload: id
+	    };
+	}
+
 	function signOutSuccess() {
+	    localStorage.removeItem('id');
 	    _reactRouter.browserHistory.push('/');
 	    return {
 	        type: SIGN_OUT_SUCCESS
@@ -54304,15 +54320,15 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Calendar = __webpack_require__(727);
+	var _Calendar = __webpack_require__(731);
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
-	var _Bets = __webpack_require__(731);
+	var _Bets = __webpack_require__(735);
 
 	var _Bets2 = _interopRequireDefault(_Bets);
 
-	var _Ranking = __webpack_require__(740);
+	var _Ranking = __webpack_require__(745);
 
 	var _Ranking2 = _interopRequireDefault(_Ranking);
 
@@ -54382,6 +54398,8 @@
 
 	var _reactRedux = __webpack_require__(156);
 
+	var _reactRouter = __webpack_require__(392);
+
 	var _actions = __webpack_require__(380);
 
 	var _NavBar = __webpack_require__(719);
@@ -54405,24 +54423,23 @@
 	    (0, _createClass3.default)(App, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            var _props = this.props;
-	            var authenticated = _props.authenticated;
-	            var userId = _props.userId;
-	            var dispatch = _props.dispatch;
+	            var dispatch = this.props.dispatch;
 
 	            dispatch((0, _actions.getAppData)());
 	            dispatch((0, _actions.getScoreByUser)());
-	            if (authenticated) {
+	            var userId = localStorage.getItem('id');
+	            if (userId) {
+	                dispatch((0, _actions.simulateAuth)(userId));
 	                dispatch((0, _actions.getUserData)(userId));
 	            }
 	        }
 	    }, {
 	        key: 'compononentWillReceiveProps',
 	        value: function compononentWillReceiveProps(nextProps) {
-	            var _props2 = this.props;
-	            var userData = _props2.userData;
-	            var userId = _props2.userId;
-	            var dispatch = _props2.dispatch;
+	            var _props = this.props;
+	            var userData = _props.userData;
+	            var userId = _props.userId;
+	            var dispatch = _props.dispatch;
 
 	            if (nextProps.userId !== userId) {
 	                dispatch((0, _actions.getUserData)(nextProps.userId));
@@ -54434,14 +54451,14 @@
 	    }, {
 	        key: 'renderChildrenWithProps',
 	        value: function renderChildrenWithProps() {
-	            var _props3 = this.props;
-	            var userId = _props3.userId;
-	            var userData = _props3.userData;
-	            var matchs = _props3.matchs;
-	            var matchsByDate = _props3.matchsByDate;
-	            var scoreByUser = _props3.scoreByUser;
-	            var children = _props3.children;
-	            var dispatch = _props3.dispatch;
+	            var _props2 = this.props;
+	            var userId = _props2.userId;
+	            var userData = _props2.userData;
+	            var matchs = _props2.matchs;
+	            var matchsByDate = _props2.matchsByDate;
+	            var scoreByUser = _props2.scoreByUser;
+	            var children = _props2.children;
+	            var dispatch = _props2.dispatch;
 
 	            var childrensProps = {
 	                Bets: {
@@ -54475,14 +54492,18 @@
 	                        'h1',
 	                        { className: 'Logo' },
 	                        _react2.default.createElement(
-	                            'span',
-	                            null,
-	                            'euro'
-	                        ),
-	                        _react2.default.createElement(
-	                            'span',
-	                            null,
-	                            'pronos'
+	                            _reactRouter.IndexLink,
+	                            { activeClassName: 'active', to: '/' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                'euro'
+	                            ),
+	                            _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                'pronos'
+	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(_NavBar2.default, { authenticated: authenticated,
@@ -54556,31 +54577,23 @@
 	        _react2.default.createElement(
 	            'ul',
 	            null,
-	            _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                    _reactRouter.IndexLink,
-	                    { activeClassName: 'active', to: '/' },
-	                    'Calendrier'
-	                )
-	            ),
 	            authenticated ? _react2.default.createElement(
 	                'li',
 	                null,
 	                _react2.default.createElement(
 	                    _reactRouter.Link,
-	                    { activeClassName: 'active', to: '/bets' },
+	                    { activeClassName: 'active', to: '/bets', title: 'Mes pronos' },
+	                    _react2.default.createElement('span', { className: 'icon-futbol-o' }),
 	                    'Pronos'
-	                ),
-	                ' '
+	                )
 	            ) : '',
 	            _react2.default.createElement(
 	                'li',
 	                null,
 	                _react2.default.createElement(
 	                    _reactRouter.Link,
-	                    { activeClassName: 'active', to: '/ranking' },
+	                    { activeClassName: 'active', to: '/ranking', title: 'Classement' },
+	                    _react2.default.createElement('span', { className: 'icon-trophy' }),
 	                    'Classement'
 	                )
 	            ),
@@ -54589,11 +54602,13 @@
 	                null,
 	                authenticated ? _react2.default.createElement(
 	                    'button',
-	                    { onClick: signOut, type: 'button' },
+	                    { onClick: signOut, type: 'button', title: 'Sign out' },
+	                    _react2.default.createElement('span', { className: 'icon-sign-out' }),
 	                    'Logout'
 	                ) : _react2.default.createElement(
 	                    'button',
-	                    { onClick: signInWithGoogle, type: 'button' },
+	                    { onClick: signInWithGoogle, type: 'button', title: 'Sign in' },
+	                    _react2.default.createElement('span', { className: 'icon-sign-in' }),
 	                    'Login'
 	                )
 	            )
@@ -54663,7 +54678,7 @@
 	var content = __webpack_require__(724);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(726)(content, {});
+	var update = __webpack_require__(730)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -54688,7 +54703,7 @@
 
 
 	// module
-	exports.push([module.id, "html {\r\n    box-sizing: border-box;\r\n}\r\n*, *:before, *:after {\r\n    box-sizing: inherit;\r\n}\r\n\r\n.App {\r\n    font-family: 'Roboto', sans-serif;\r\n}\r\n\r\n.Header {\r\n    background-color: #4CAF50;\r\n    color: white;\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    padding: 0rem 2rem;\r\n    height: 4rem;\r\n}\r\n\r\n.Logo {\r\n    font-size: 1.6rem;\r\n    font-style: italic;\r\n    margin: 0;\r\n}\r\n\r\n.Logo span:first-child{\r\n    font-weight: 500;\r\n}\r\n\r\n.Logo span:last-child{\r\n    font-weight: 300;\r\n}\r\n\r\n.NavBar {\r\n    font-weight: 300;\r\n}\r\n\r\n.NavBar, .NavBar ul {\r\n    display: flex;\r\n    align-items: center;\r\n    height: 100%;\r\n}\r\n\r\n.NavBar ul {\r\n    flex-direction: row;\r\n    list-style: none;\r\n    padding: 0;\r\n    margin: 0;\r\n    height: 100%;\r\n    margin-right: -2rem;\r\n}\r\n\r\n.NavBar li {\r\n    display: flex;\r\n    height: 100%;\r\n}\r\n\r\n.NavBar li a {\r\n    display: flex;\r\n    height: 100%;\r\n    padding: 0rem 1rem;\r\n    align-items: center;\r\n    color: rgba(255, 255, 255, .8);\r\n    text-decoration: none;\r\n}\r\n\r\n.NavBar li:hover a, .NavBar li:hover button, .NavBar li .active {\r\n    background-color: rgba(255, 255, 255, 0.2);\r\n    color: rgba(255, 255, 255, 1);\r\n\r\n}\r\n\r\n.NavBar button {\r\n    background-color: transparent;\r\n    border: none;\r\n    color: rgba(255, 255, 255, .8);\r\n    padding: 0 1rem;\r\n    font-weight: 300;\r\n}\r\n\r\n.Main {\r\n    padding: 0rem 2rem;\r\n}\r\n\r\n.Calendar {\r\n}\r\n\r\n.Day {\r\n    padding: 2rem 0rem;\r\n}\r\n\r\n.Day + .Day {\r\n    padding-top: 0;\r\n}\r\n\r\n.Day h2 {\r\n    font-size: 1.1rem;\r\n    font-weight: 500;\r\n    padding-bottom: .4rem;\r\n    border-bottom: 1px solid #eaeaea;\r\n    margin: 0;\r\n}\r\n\r\n.MatchList {\r\n    display: flex;\r\n    flex-direction: column;\r\n    list-style: none;\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n}\r\n\r\n.MatchItem {\r\n    display: flex;\r\n    flex-direction: row;\r\n    border-bottom: 1px solid #eaeaea;\r\n    justify-content: space-between;\r\n    height: 3rem;\r\n    align-items: center;\r\n}\r\n\r\n.MatchItem time {\r\n    color: #b2b2b2;\r\n    font-size: .8rem;\r\n    font-weight: 500;\r\n    padding-left: .8rem;\r\n}\r\n\r\n.MatchItem:first-child {\r\n    display: flex;\r\n    flex-direction: row;\r\n    border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.TeamList {\r\n    display: flex;\r\n    flex-direction: row;\r\n    padding-left: 0;\r\n    align-items: center;\r\n    list-style: none;\r\n}\r\n.TeamList .separator {\r\n    margin: 0rem 1rem 0rem .8rem;\r\n}\r\n\r\n.TeamItem {\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n}\r\n\r\n.TeamItem .team {\r\n    width: 6rem;\r\n    font-size: .9rem;\r\n}\r\n\r\n.TeamItem .score {\r\n    font-weight: 500;\r\n}\r\n\r\n.TeamItem:first-child .team {\r\n    margin-right: 1.2rem;\r\n    display: flex;\r\n    justify-content: flex-end;\r\n}\r\n\r\n.TeamItem:first-child .score {\r\n    margin-right: .2rem;\r\n}\r\n\r\n.TeamItem:nth-child(3) .team {\r\n    margin-left: 1.2rem;\r\n}\r\n\r\n.TeamItem:nth-child(3).score {\r\n    margin-left: .2rem;\r\n}", ""]);
+	exports.push([module.id, "*, *:before, *:after {\r\n    box-sizing: inherit;\r\n}\r\n\r\nhtml {\r\n    box-sizing: border-box;\r\n    overflow: hidden;\r\n    height: 100%;\r\n}\r\n\r\nbody,\r\n.App,\r\n#app,\r\n#app > div,\r\n.Main {\r\n    height: 100%;\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n\r\n/* Icons */\r\n\r\n@font-face {\r\n    font-family: 'icomoon';\r\n    src:    url(" + __webpack_require__(726) + ");\r\n    src:    url(" + __webpack_require__(726) + "?#iefix) format('embedded-opentype'),\r\n    url(" + __webpack_require__(727) + ") format('truetype'),\r\n    url(" + __webpack_require__(728) + ") format('woff'),\r\n    url(" + __webpack_require__(729) + "?#icomoon) format('svg');\r\n    font-weight: normal;\r\n    font-style: normal;\r\n}\r\n\r\n[class^=\"icon-\"], [class*=\" icon-\"] {\r\n    /* use !important to prevent issues with browser extensions that change fonts */\r\n    font-family: 'icomoon' !important;\r\n    speak: none;\r\n    font-style: normal;\r\n    font-weight: normal;\r\n    font-variant: normal;\r\n    text-transform: none;\r\n    line-height: 1;\r\n\r\n    /* Better Font Rendering =========== */\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\n.icon-check-circle-o:before {\r\n    content: \"\\F05D\";\r\n}\r\n.icon-sign-out:before {\r\n    content: \"\\F08B\";\r\n}\r\n.icon-sign-in:before {\r\n    content: \"\\F090\";\r\n}\r\n.icon-trophy:before {\r\n    content: \"\\F091\";\r\n}\r\n.icon-futbol-o:before {\r\n    content: \"\\F1E3\";\r\n}\r\n.icon-soccer-ball-o:before {\r\n    content: \"\\F1E3\";\r\n}\r\n\r\n.App {\r\n    font-family: 'Roboto', sans-serif;\r\n}\r\n\r\n/* Header */\r\n\r\n.Header {\r\n    /* Box model */\r\n    height: 4rem;\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    padding: 0rem 1rem;\r\n\r\n    /* Visual */\r\n    background-color: #4CAF50;\r\n\r\n    /* Typography */\r\n    color: white;\r\n}\r\n\r\n.Logo {\r\n    /* Box model */\r\n    margin: 0;\r\n\r\n    /* Typography */\r\n    font-size: 1rem;\r\n    font-style: italic;\r\n    text-transform: uppercase;\r\n}\r\n\r\n.Logo a {\r\n    /* Visual */\r\n    outline: none;\r\n\r\n    /* Typography */\r\n    color: white;\r\n    text-decoration: none;\r\n}\r\n\r\n.Logo span:first-child{\r\n    font-weight: 500;\r\n}\r\n\r\n.Logo span:last-child{\r\n    font-weight: 300;\r\n}\r\n\r\n/* NavBar */\r\n\r\n.NavBar {\r\n    font-weight: 300;\r\n}\r\n\r\n.NavBar,\r\n.NavBar ul {\r\n    display: flex;\r\n    align-items: center;\r\n    height: 100%;\r\n}\r\n\r\n.NavBar ul {\r\n    flex-direction: row;\r\n    margin: 0;\r\n    margin-right: -1rem;\r\n    padding: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.NavBar li {\r\n    display: flex;\r\n    height: 100%;\r\n}\r\n\r\n.NavBar li a {\r\n    /* Box model */\r\n    height: 100%;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0rem 1.4rem;\r\n\r\n    /* Visual */\r\n    border-left: 1px solid rgba(255, 255, 255, .3);\r\n    outline: none;\r\n    text-decoration: none;\r\n\r\n    /* Typography */\r\n    color: rgba(255, 255, 255, 1);\r\n}\r\n\r\n.NavBar li a span:last-child,\r\n.NavBar li button span:last-child {\r\n    display: none;\r\n}\r\n\r\n.NavBar li a span[class^=\"icon\"] {\r\n    font-size: 1.2rem;\r\n}\r\n\r\n.NavBar li:hover a,\r\n.NavBar li:hover button,\r\n.NavBar li .active {\r\n    /* Visual */\r\n    background-color: rgba(255, 255, 255, 0.2);\r\n\r\n    /* Typography */\r\n    color: rgba(255, 255, 255, 1);\r\n}\r\n\r\n.NavBar button {\r\n    /* Box model */\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0rem 1.4rem;\r\n    /* Visual */\r\n    background-color: transparent;\r\n    border: none;\r\n    border-left: 1px solid rgba(255, 255, 255, .3);\r\n    color: rgba(255, 255, 255, 1);\r\n    outline: none;\r\n\r\n    /* Typography */\r\n    font-size: .85rem;\r\n    font-weight: 400;\r\n    text-transform: uppercase;\r\n}\r\n\r\n.NavBar li button span[class^=\"icon\"] {\r\n    font-size: 1.2rem;\r\n}\r\n\r\n/* Main */\r\n\r\n.Main {\r\n    overflow-y: auto;\r\n    padding: 0rem 1rem;\r\n}\r\n\r\n/* Calendar */\r\n\r\n.Day {\r\n    padding: 2rem 0rem;\r\n}\r\n\r\n.Day + .Day {\r\n    padding-top: 0;\r\n}\r\n\r\n.Day h2 {\r\n    /* Box mode */\r\n    margin: 0;\r\n    padding-bottom: .4rem;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n\r\n    /* Typography */\r\n    font-size: 1.1rem;\r\n    font-weight: 500;\r\n}\r\n\r\n.MatchList {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.MatchItem {\r\n    /* Box model */\r\n    height: 3rem;\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.MatchItem time {\r\n    /* Box model */\r\n    padding-left: .8rem;\r\n\r\n    /* Typography */\r\n    color: #b2b2b2;\r\n    font-size: .8rem;\r\n    font-weight: 500;\r\n}\r\n\r\n.MatchItem:first-child {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: row;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.TeamList {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n    padding-left: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.TeamItem {\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n}\r\n\r\n.TeamItem .team {\r\n    /* Box model */\r\n    width: 6rem;\r\n\r\n    /* Typograpgy */\r\n    font-size: .9rem;\r\n}\r\n\r\n.TeamItem .score {\r\n    font-weight: 500;\r\n}\r\n\r\n.TeamItem:first-child .team {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-right: 1.2rem;\r\n}\r\n\r\n.TeamItem:first-child .score {\r\n    margin-right: .2rem;\r\n}\r\n\r\n.TeamItem:last-child .team {\r\n    margin-left: 1.2rem;\r\n}\r\n\r\n.TeamItem:last-child .score {\r\n    margin-left: .2rem;\r\n}\r\n\r\n.TeamItem .score input {\r\n    /* Box model */\r\n    width: 2.5rem;\r\n    padding: 0 .1rem 0 .5rem;\r\n\r\n    /* Visual */\r\n    border: 1px solid #222;\r\n    border-radius: 3px;\r\n\r\n    /* Typography */\r\n    color: #222;\r\n}\r\n\r\n.TeamItem .score input[class=\"disabled\"] {\r\n    /* Visual */\r\n    cursor: not-allowed;\r\n    border-color: #ddd;\r\n}\r\n\r\n.Validation span[class^=\"icon\"] {\r\n    font-size: 1.5rem;\r\n    font-weight: 300;\r\n    color: #4CAF50;\r\n}\r\n\r\n@media screen and (min-width: 600px) {\r\n    .Logo {\r\n        font-size: 1.1rem;\r\n    }\r\n\r\n    .NavBar li a,\r\n    .NavBar li button {\r\n        /* Box model */\r\n        padding: 0rem 1rem;\r\n\r\n        /* Visual */\r\n        border: none;\r\n\r\n        /* Typography */\r\n        color: rgba(255, 255, 255, .8);\r\n        font-size: .85rem;\r\n        text-transform: uppercase;\r\n        font-weight: 400;\r\n    }\r\n\r\n    .NavBar li a span:last-child,\r\n    .NavBar li button span:last-child {\r\n        display: block;\r\n    }\r\n\r\n    .NavBar li a span[class^=\"icon\"],\r\n    .NavBar li button span[class^=\"icon\"] {\r\n        /* Box model */\r\n        padding-right: .5rem;\r\n\r\n        /* Typography */\r\n        font-size: .85rem;\r\n    }\r\n}", ""]);
 
 	// exports
 
@@ -54751,6 +54766,30 @@
 
 /***/ },
 /* 726 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "css/icomoon/fonts/icomoon.eot";
+
+/***/ },
+/* 727 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "css/icomoon/fonts/icomoon.ttf";
+
+/***/ },
+/* 728 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "css/icomoon/fonts/icomoon.woff";
+
+/***/ },
+/* 729 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "css/icomoon/fonts/icomoon.svg";
+
+/***/ },
+/* 730 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -55002,7 +55041,7 @@
 
 
 /***/ },
-/* 727 */
+/* 731 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55020,11 +55059,11 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _Day = __webpack_require__(728);
+	var _Day = __webpack_require__(732);
 
 	var _Day2 = _interopRequireDefault(_Day);
 
-	var _MatchList = __webpack_require__(729);
+	var _MatchList = __webpack_require__(733);
 
 	var _MatchList2 = _interopRequireDefault(_MatchList);
 
@@ -55057,7 +55096,7 @@
 	};
 
 /***/ },
-/* 728 */
+/* 732 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55103,12 +55142,12 @@
 	    );
 	}
 
-	Day.defaultProps = {};
-
-	Day.propTypes = {};
+	Day.propTypes = {
+	    date: _react.PropTypes.string
+	};
 
 /***/ },
-/* 729 */
+/* 733 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55126,7 +55165,7 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _MatchItem = __webpack_require__(730);
+	var _MatchItem = __webpack_require__(734);
 
 	var _MatchItem2 = _interopRequireDefault(_MatchItem);
 
@@ -55140,17 +55179,17 @@
 	        'ul',
 	        { className: 'MatchList' },
 	        props.matchs.map(function (match) {
-	            return _react2.default.createElement(_MatchItem2.default, { match: match });
+	            return _react2.default.createElement(_MatchItem2.default, { key: match.date, match: match });
 	        })
 	    );
 	}
 
-	MatchList.defaultProps = {};
-
-	MatchList.propTypes = {};
+	MatchList.propTypes = {
+	    matchs: _react.PropTypes.arrayOf(_react.PropTypes.object)
+	};
 
 /***/ },
-/* 730 */
+/* 734 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55223,12 +55262,12 @@
 	    );
 	}
 
-	MatchItem.defaultProps = {};
-
-	MatchItem.propTypes = {};
+	MatchItem.propTypes = {
+	    match: _react.PropTypes.object
+	};
 
 /***/ },
-/* 731 */
+/* 735 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55236,25 +55275,102 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = undefined;
-
-	var _toConsumableArray2 = __webpack_require__(258);
-
-	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+	exports.default = Bets;
 
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Day = __webpack_require__(728);
+	var _Day = __webpack_require__(732);
 
 	var _Day2 = _interopRequireDefault(_Day);
 
-	var _Bet = __webpack_require__(732);
+	var _BetList = __webpack_require__(736);
 
-	var _Bet2 = _interopRequireDefault(_Bet);
+	var _BetList2 = _interopRequireDefault(_BetList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Bets(props) {
+	    var matchsByDate = props.matchsByDate;
+	    var userData = props.userData;
+	    var handleChange = props.handleChange;
+
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'p',
+	            null,
+	            'Les scores doivent être enregistrés au plus tard 1h avant le début de la rencontre'
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            null,
+	            'score: ',
+	            userData.score
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            null,
+	            matchsByDate.map(function (date) {
+	                return _react2.default.createElement(
+	                    _Day2.default,
+	                    { key: date[0].date, date: date[0].date },
+	                    _react2.default.createElement(_BetList2.default, {
+	                        matchs: date,
+	                        userData: userData,
+	                        handleChange: handleChange
+	                    })
+	                );
+	            })
+	        )
+	    );
+	}
+
+	Bets.defaultProps = {
+	    matchsByDate: [],
+	    userData: {},
+	    handleChange: function handleChange() {}
+	};
+
+	Bets.propTypes = {
+	    matchsByDate: _react.PropTypes.arrayOf(_react.PropTypes.arrayOf(_react.PropTypes.object)),
+	    userData: _react.PropTypes.object,
+	    handleChange: _react.PropTypes.func
+	};
+
+/***/ },
+/* 736 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _toConsumableArray2 = __webpack_require__(258);
+
+	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+	exports.default = BetList;
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _moment = __webpack_require__(277);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _BetItem = __webpack_require__(737);
+
+	var _BetItem2 = _interopRequireDefault(_BetItem);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_moment2.default.locale('fr');
 
 	function getBetByMatch(match, bets) {
 	    var targetedBet = bets.find(function (bet) {
@@ -55280,66 +55396,31 @@
 	        })), [newBet]), score: userData.score, displayName: userData.displayName, avatar: userData.avatar };
 	}
 
-	function Bets(props) {
-	    var matchsByDate = props.matchsByDate;
-	    var userData = props.userData;
-	    var _handleChange = props.handleChange;
-
+	function BetList(props) {
 
 	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	            'h2',
-	            null,
-	            'Bets'
-	        ),
-	        _react2.default.createElement(
-	            'p',
-	            null,
-	            'Les scores doivent être enregistrés au plus tard 1h avant le début de la rencontre'
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            null,
-	            'score: ',
-	            userData.score
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            null,
-	            matchsByDate.map(function (date) {
-	                return _react2.default.createElement(
-	                    _Day2.default,
-	                    { key: date[0].date, date: date[0].date },
-	                    date.map(function (match) {
-	                        return _react2.default.createElement(_Bet2.default, { match: match,
-	                            bet: getBetByMatch(match, userData.bets),
-	                            handleChange: function handleChange(newBet) {
-	                                return _handleChange(mergeBets(userData, match, newBet));
-	                            } });
-	                    })
-	                );
-	            })
-	        )
+	        'ul',
+	        { className: 'MatchList' },
+	        props.matchs.map(function (match) {
+	            return _react2.default.createElement(_BetItem2.default, { key: match.date,
+	                match: match,
+	                bet: getBetByMatch(match, props.userData.bets),
+	                handleChange: function handleChange(event) {
+	                    return props.handleChange(mergeBets(props.userData, match, event));
+	                }
+	            });
+	        })
 	    );
 	}
 
-	exports.default = Bets;
-	Bets.defaultProps = {
-	    matchsByDate: [],
-	    userData: {},
-	    handleChange: function handleChange() {}
-	};
-
-	Bets.propTypes = {
-	    matchsByDate: _react.PropTypes.arrayOf(_react.PropTypes.arrayOf(_react.PropTypes.object)),
+	BetList.propTypes = {
+	    matchs: _react.PropTypes.arrayOf(_react.PropTypes.object),
 	    userData: _react.PropTypes.object,
 	    handleChange: _react.PropTypes.func
 	};
 
 /***/ },
-/* 732 */
+/* 737 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55352,7 +55433,7 @@
 
 	var _isInteger2 = _interopRequireDefault(_isInteger);
 
-	var _defineProperty2 = __webpack_require__(733);
+	var _defineProperty2 = __webpack_require__(738);
 
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
@@ -55360,11 +55441,11 @@
 
 	var _assign2 = _interopRequireDefault(_assign);
 
-	var _parseInt = __webpack_require__(734);
+	var _parseInt = __webpack_require__(739);
 
 	var _parseInt2 = _interopRequireDefault(_parseInt);
 
-	exports.default = Bet;
+	exports.default = BetItem;
 
 	var _react = __webpack_require__(3);
 
@@ -55392,18 +55473,14 @@
 	    return (0, _moment2.default)() >= (0, _moment2.default)(matchDate).subtract(1, 'hour');
 	}
 
-	function Bet(props) {
-	    var match = props.match;
-	    var bet = props.bet;
-	    var handleChange = props.handleChange;
-
-	    var betIsClosed = checkDate(match.date);
+	function BetItem(props) {
+	    var betIsClosed = checkDate(props.match.date);
 	    var onChange = betIsClosed ? function () {} : function (event) {
-	        return handleChange(mergeBet(event, bet, match));
+	        return props.handleChange(mergeBet(event, props.bet, props.match));
 	    };
 	    return _react2.default.createElement(
 	        'li',
-	        { key: match.date, className: 'MatchItem' },
+	        { key: props.match.date, className: 'MatchItem' },
 	        _react2.default.createElement(
 	            'time',
 	            { dateTime: (0, _moment2.default)(props.match.date).format('LT') },
@@ -55416,26 +55493,26 @@
 	                'li',
 	                { className: 'TeamItem' },
 	                _react2.default.createElement(
-	                    'span',
-	                    { className: 'team' },
-	                    match.team1.name
+	                    'label',
+	                    { htmlFor: props.match.team1.name, className: 'team' },
+	                    props.match.team1.name
 	                ),
 	                _react2.default.createElement(
 	                    'span',
 	                    { className: 'score' },
 	                    _react2.default.createElement('input', {
+	                        id: props.match.team1.name,
+	                        className: betIsClosed ? 'disabled' : '',
 	                        name: 'team1',
 	                        type: 'number',
-	                        value: (0, _isInteger2.default)(bet.team1.score) ? bet.team1.score : '',
+	                        min: '0',
+	                        value: (0, _isInteger2.default)(props.bet.team1.score) ? props.bet.team1.score : '',
 	                        onChange: onChange,
-	                        disabled: betIsClosed })
+	                        disabled: betIsClosed
+	                    })
 	                )
 	            ),
-	            _react2.default.createElement(
-	                'span',
-	                { className: 'separator' },
-	                '-'
-	            ),
+	            '-',
 	            _react2.default.createElement(
 	                'li',
 	                { className: 'TeamItem' },
@@ -55443,46 +55520,38 @@
 	                    'span',
 	                    { className: 'score' },
 	                    _react2.default.createElement('input', {
+	                        id: props.match.team2.name,
+	                        className: betIsClosed ? 'disabled' : '',
 	                        name: 'team2',
 	                        type: 'number',
-	                        value: (0, _isInteger2.default)(bet.team1.score) ? bet.team2.score : '',
+	                        min: '0',
+	                        value: (0, _isInteger2.default)(props.bet.team2.score) ? props.bet.team2.score : '',
 	                        onChange: onChange,
 	                        disabled: betIsClosed })
 	                ),
 	                _react2.default.createElement(
-	                    'span',
-	                    { className: 'team' },
-	                    match.team2.name
+	                    'label',
+	                    { htmlFor: props.match.team2.name, className: 'team' },
+	                    props.match.team2.name
 	                )
-	            ),
-	            _react2.default.createElement(
-	                'li',
-	                null,
-	                (0, _isInteger2.default)(bet.team2.score) && (0, _isInteger2.default)(bet.team1.score) ? _react2.default.createElement(
-	                    'div',
-	                    { style: { color: 'green' } },
-	                    'Validated'
-	                ) : ''
 	            )
 	        ),
-	        _react2.default.createElement('span', { className: 'UserScore' })
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'Validation' },
+	            (0, _isInteger2.default)(props.bet.team2.score) && (0, _isInteger2.default)(props.bet.team1.score) ? _react2.default.createElement('span', { className: 'icon-check-circle-o' }) : ''
+	        )
 	    );
 	}
 
-	Bet.defaultProps = {
-	    match: {},
-	    bet: {},
-	    handleChange: function handleChange() {}
-	};
-
-	Bet.propTypes = {
+	BetItem.propTypes = {
 	    match: _react.PropTypes.object,
 	    bet: _react.PropTypes.object,
 	    handleChange: _react.PropTypes.func
 	};
 
 /***/ },
-/* 733 */
+/* 738 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -55511,34 +55580,34 @@
 	};
 
 /***/ },
-/* 734 */
+/* 739 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(735), __esModule: true };
+	module.exports = { "default": __webpack_require__(740), __esModule: true };
 
 /***/ },
-/* 735 */
+/* 740 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(736);
+	__webpack_require__(741);
 	module.exports = parseInt;
 
 /***/ },
-/* 736 */
+/* 741 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export   = __webpack_require__(185)
-	  , $parseInt = __webpack_require__(737);
+	  , $parseInt = __webpack_require__(742);
 	// 20.1.2.13 Number.parseInt(string, radix)
 	$export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', {parseInt: $parseInt});
 
 /***/ },
-/* 737 */
+/* 742 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $parseInt = __webpack_require__(186).parseInt
-	  , $trim     = __webpack_require__(738).trim
-	  , ws        = __webpack_require__(739)
+	  , $trim     = __webpack_require__(743).trim
+	  , ws        = __webpack_require__(744)
 	  , hex       = /^[\-+]?0[xX]/;
 
 	module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix){
@@ -55547,13 +55616,13 @@
 	} : $parseInt;
 
 /***/ },
-/* 738 */
+/* 743 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(185)
 	  , defined = __webpack_require__(207)
 	  , fails   = __webpack_require__(196)
-	  , spaces  = __webpack_require__(739)
+	  , spaces  = __webpack_require__(744)
 	  , space   = '[' + spaces + ']'
 	  , non     = '\u200b\u0085'
 	  , ltrim   = RegExp('^' + space + space + '*')
@@ -55582,14 +55651,14 @@
 	module.exports = exporter;
 
 /***/ },
-/* 739 */
+/* 744 */
 /***/ function(module, exports) {
 
 	module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
 	  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
 /***/ },
-/* 740 */
+/* 745 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

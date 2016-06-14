@@ -3,7 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import moment from 'moment';
 moment.locale('fr');
 
-import { INIT_AUTH, SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS, SET_APP_DATA, SET_USER_DATA, SET_SCORE_BY_USER } from './actions.js';
+import { SIMULATE_AUTH, SIGN_IN_SUCCESS, SIGN_OUT_SUCCESS, SET_APP_DATA, SET_USER_DATA, SET_SCORE_BY_USER } from './actions.js';
 
 const initialState = {
     authenticated: false,
@@ -57,9 +57,10 @@ function orderMatchsByDate(matchs) {
 
 export default function appState(state = initialState, {type, payload}) {
     switch (type) {
-    case INIT_AUTH:
+    case SIMULATE_AUTH:
         return Object.assign({}, state, {
             authenticated: true,
+            id: payload
         });
     case SIGN_IN_SUCCESS:
         return Object.assign({}, state, {
