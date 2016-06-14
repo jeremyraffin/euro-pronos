@@ -2,6 +2,29 @@
 
 ---
 
+## v0.2.2
+
+**Author**: Guillaume Mousnier
+
+**Type**: Feature
+
+**Changes**:
+- Classement par semaine
+
+---
+
+## v0.2.1
+
+**Author**: Guillaume Mousnier | Jeremy Raffin
+
+**Type**: Feature
+
+**Changes**:
+- Persistence de la connection
+- Correction de bugs divers
+
+---
+
 ## v0.2.0
 
 **Author**: Guillaume Mousnier | Jeremy Raffin
