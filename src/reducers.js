@@ -27,12 +27,16 @@ function isPartialBetMatching(bet, match) {
     return Math.sign(match.team1.score - match.team2.score) === Math.sign(bet.team1.score - bet.team2.score);
 }
 
-function checkDate(matchDate) {
-    return moment().subtract(2, 'hour') >= moment(matchDate);
+function checkIfMatchIsInWeek(match) {
+    return moment(match.date) >= moment().startOf('week');
+}
+
+function checkIfMatchIsEnded(match) {
+    return moment().subtract(2, 'hour') >= moment(match.date);
 }
 
 function computeMatchScore(bet, match) {
-    if (checkDate(match.date) && Number.isInteger(match.team1.score) && Number.isInteger(match.team2.score)) {
+    if (match && checkIfMatchIsEnded(match) && Number.isInteger(match.team1.score) && Number.isInteger(match.team2.score)) {
         if (isPerfectBetMatching(bet, match)) {
             return 3;
         } else if (isPartialBetMatching(bet, match)) {
@@ -88,8 +92,9 @@ export default function appState(state = initialState, {type, payload}) {
         return Object.assign({}, state, {
             scoreByUser: payload.map(user => {
                 user.score = computeUserScore(state.matchs, user.bets);
+                user.weekScore = computeUserScore(state.matchs.filter(match => checkIfMatchIsInWeek(match)), user.bets);
                 return user;
-            }).sort((prevUser, nextUser) => prevUser.score - nextUser.score).reverse()
+            }).sort((prevUser, nextUser) => prevUser.weekScore - nextUser.weekScore).reverse()
         });
     default:
         return state;
