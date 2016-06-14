@@ -20697,12 +20697,16 @@
 	    return (0, _sign2.default)(match.team1.score - match.team2.score) === (0, _sign2.default)(bet.team1.score - bet.team2.score);
 	}
 
-	function checkDate(matchDate) {
-	    return (0, _moment2.default)().subtract(2, 'hour') >= (0, _moment2.default)(matchDate);
+	function checkIfMatchIsInWeek(match) {
+	    return (0, _moment2.default)(match.date) >= (0, _moment2.default)().startOf('week');
+	}
+
+	function checkIfMatchIsEnded(match) {
+	    return (0, _moment2.default)().subtract(2, 'hour') >= (0, _moment2.default)(match.date);
 	}
 
 	function computeMatchScore(bet, match) {
-	    if (checkDate(match.date) && (0, _isInteger2.default)(match.team1.score) && (0, _isInteger2.default)(match.team2.score)) {
+	    if (match && checkIfMatchIsEnded(match) && (0, _isInteger2.default)(match.team1.score) && (0, _isInteger2.default)(match.team2.score)) {
 	        if (isPerfectBetMatching(bet, match)) {
 	            return 3;
 	        } else if (isPartialBetMatching(bet, match)) {
@@ -20773,9 +20777,12 @@
 	            return (0, _assign2.default)({}, state, {
 	                scoreByUser: payload.map(function (user) {
 	                    user.score = computeUserScore(state.matchs, user.bets);
+	                    user.weekScore = computeUserScore(state.matchs.filter(function (match) {
+	                        return checkIfMatchIsInWeek(match);
+	                    }), user.bets);
 	                    return user;
 	                }).sort(function (prevUser, nextUser) {
-	                    return prevUser.score - nextUser.score;
+	                    return prevUser.weekScore - nextUser.weekScore;
 	                }).reverse()
 	            });
 	        default:
@@ -55681,7 +55688,31 @@
 	        _react2.default.createElement(
 	            'h2',
 	            null,
-	            'Classement des joueurs'
+	            'Classement des joueurs (pour la semaine)'
+	        ),
+	        _react2.default.createElement(
+	            'li',
+	            { className: 'MatchItem' },
+	            _react2.default.createElement(
+	                'ul',
+	                { className: 'TeamList' },
+	                _react2.default.createElement(
+	                    'li',
+	                    { className: 'TeamItem' },
+	                    _react2.default.createElement('span', { className: 'team' }),
+	                    _react2.default.createElement('span', { className: 'team' }),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'score' },
+	                        'Total'
+	                    ),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'score' },
+	                        'Week'
+	                    )
+	                )
+	            )
 	        ),
 	        _react2.default.createElement(
 	            'ul',
@@ -55710,6 +55741,11 @@
 	                                'span',
 	                                { className: 'score' },
 	                                user.score
+	                            ),
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'score' },
+	                                user.weekScore
 	                            )
 	                        )
 	                    )
