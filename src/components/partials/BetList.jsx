@@ -5,7 +5,7 @@ moment.locale('fr');
 import BetItem from './BetItem.jsx';
 
 function getBetByMatch(match, bets) {
-    const targetedBet = bets.find((bet) => match.id === bet.id);
+    const targetedBet = bets ? bets.find((bet) => match.id === bet.id) : false;
     if (targetedBet) {
         return targetedBet;
     }
@@ -25,7 +25,6 @@ function mergeBets(userData, match, newBet) {
 }
 
 export default function BetList(props) {
-
     return (
         <ul className="MatchList">
             {

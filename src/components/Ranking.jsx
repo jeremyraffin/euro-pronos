@@ -27,7 +27,7 @@ export default function Ranking(props) {
                             <ul className="TeamList">
                                 <li className="TeamItem">
                                     <span className="team">
-                                        <img src={user.avatar} width="40px"/>
+                                        <img src={user.avatar} width="40px" height="40px"/>
                                     </span>
                                     <span className="team">
                                         {user.displayName}
