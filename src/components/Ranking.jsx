@@ -4,32 +4,34 @@ export default function Ranking(props) {
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h2>Classement des joueurs (pour la semaine)</h2>
-            <li className="MatchItem">
-                <ul className="TeamList">
-                    <li className="TeamItem">
-                        <span className="team">
-                        </span>
-                        <span className="team">
-                        </span>
-                        <span className="score">
-                            Total
-                        </span>
-                        <span className="score">
-                            Week
-                        </span>
-                    </li>
-                </ul>
-            </li>
-            <ul className="MatchList">
+            <ul className="RankingList">
+                <li className="RankingItem">
+                    <ul className="UserList">
+                        <li className="UserItem">
+                            <span className="avatar">
+                            </span>
+                            <span className="name">
+                            </span>
+                            <span className="score">
+                                Total
+                            </span>
+                            <span className="score">
+                                Week
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul className="RankingList">
                 {
                     props.scoreByUser.map(user => (
-                        <li key={user.displayName} className="MatchItem">
-                            <ul className="TeamList">
-                                <li className="TeamItem">
-                                    <span className="team">
+                        <li key={user.displayName} className="RankingItem">
+                            <ul className="UserList">
+                                <li className="UserItem">
+                                    <span className="avatar">
                                         <img src={user.avatar} width="40px" height="40px"/>
                                     </span>
-                                    <span className="team">
+                                    <span className="name">
                                         {user.displayName}
                                     </span>
                                     <span className="score">

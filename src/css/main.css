@@ -337,6 +337,62 @@ body,
     border-color: #ddd;
 }
 
+.RankingList {
+    /* Box model */
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+
+    /* Visual */
+    list-style: none;
+}
+
+.RankingItem {
+    /* Box model */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    /* Visual */
+    border-bottom: 1px solid #eaeaea;
+}
+
+.UserList {
+    /* Box model */
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+
+    /* Visual */
+    list-style: none;
+}
+
+.UserItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.UserItem .score {
+    flex-direction: row;
+    align-items: center;
+    width: 2.4rem;
+}
+
+.UserItem .name {
+    width: 10rem;
+}
+
+.UserItem span {
+    display: flex;
+    margin: 1.2rem;
+}
+
+
+
 .Validation span[class^="icon"] {
     font-size: 1.5rem;
     font-weight: 300;
