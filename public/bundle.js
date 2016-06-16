@@ -54712,7 +54712,7 @@
 
 
 	// module
-	exports.push([module.id, "*, *:before, *:after {\r\n    box-sizing: inherit;\r\n}\r\n\r\nhtml {\r\n    box-sizing: border-box;\r\n    overflow: hidden;\r\n    height: 100%;\r\n}\r\n\r\nbody,\r\n.App,\r\n#app,\r\n#app > div,\r\n.Main {\r\n    height: 100%;\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n\r\n/* Icons */\r\n\r\n@font-face {\r\n    font-family: 'icomoon';\r\n    src:    url(" + __webpack_require__(726) + ");\r\n    src:    url(" + __webpack_require__(726) + "?#iefix) format('embedded-opentype'),\r\n    url(" + __webpack_require__(727) + ") format('truetype'),\r\n    url(" + __webpack_require__(728) + ") format('woff'),\r\n    url(" + __webpack_require__(729) + "?#icomoon) format('svg');\r\n    font-weight: normal;\r\n    font-style: normal;\r\n}\r\n\r\n[class^=\"icon-\"], [class*=\" icon-\"] {\r\n    /* use !important to prevent issues with browser extensions that change fonts */\r\n    font-family: 'icomoon' !important;\r\n    speak: none;\r\n    font-style: normal;\r\n    font-weight: normal;\r\n    font-variant: normal;\r\n    text-transform: none;\r\n    line-height: 1;\r\n\r\n    /* Better Font Rendering =========== */\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\n.icon-check-circle-o:before {\r\n    content: \"\\F05D\";\r\n}\r\n.icon-sign-out:before {\r\n    content: \"\\F08B\";\r\n}\r\n.icon-sign-in:before {\r\n    content: \"\\F090\";\r\n}\r\n.icon-trophy:before {\r\n    content: \"\\F091\";\r\n}\r\n.icon-futbol-o:before {\r\n    content: \"\\F1E3\";\r\n}\r\n.icon-soccer-ball-o:before {\r\n    content: \"\\F1E3\";\r\n}\r\n\r\n.App {\r\n    font-family: 'Roboto', sans-serif;\r\n}\r\n\r\n/* Header */\r\n\r\n.Header {\r\n    /* Box model */\r\n    height: 4rem;\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    padding: 0rem 1rem;\r\n\r\n    /* Visual */\r\n    background-color: #4CAF50;\r\n\r\n    /* Typography */\r\n    color: white;\r\n}\r\n\r\n.Logo {\r\n    /* Box model */\r\n    margin: 0;\r\n\r\n    /* Typography */\r\n    font-size: 1rem;\r\n    font-style: italic;\r\n    text-transform: uppercase;\r\n}\r\n\r\n.Logo a {\r\n    /* Visual */\r\n    outline: none;\r\n\r\n    /* Typography */\r\n    color: white;\r\n    text-decoration: none;\r\n}\r\n\r\n.Logo span:first-child{\r\n    font-weight: 500;\r\n}\r\n\r\n.Logo span:last-child{\r\n    font-weight: 300;\r\n}\r\n\r\n/* NavBar */\r\n\r\n.NavBar {\r\n    font-weight: 300;\r\n}\r\n\r\n.NavBar,\r\n.NavBar ul {\r\n    display: flex;\r\n    align-items: center;\r\n    height: 100%;\r\n}\r\n\r\n.NavBar ul {\r\n    flex-direction: row;\r\n    margin: 0;\r\n    margin-right: -1rem;\r\n    padding: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.NavBar li {\r\n    display: flex;\r\n    height: 100%;\r\n}\r\n\r\n.NavBar li a {\r\n    /* Box model */\r\n    height: 100%;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0rem 1.4rem;\r\n\r\n    /* Visual */\r\n    border-left: 1px solid rgba(255, 255, 255, .3);\r\n    outline: none;\r\n    text-decoration: none;\r\n\r\n    /* Typography */\r\n    color: rgba(255, 255, 255, 1);\r\n}\r\n\r\n.NavBar li a span:last-child,\r\n.NavBar li button span:last-child {\r\n    display: none;\r\n}\r\n\r\n.NavBar li a span[class^=\"icon\"] {\r\n    font-size: 1.2rem;\r\n}\r\n\r\n.NavBar li:hover a,\r\n.NavBar li:hover button,\r\n.NavBar li .active {\r\n    /* Visual */\r\n    background-color: rgba(255, 255, 255, 0.2);\r\n\r\n    /* Typography */\r\n    color: rgba(255, 255, 255, 1);\r\n}\r\n\r\n.NavBar button {\r\n    /* Box model */\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0rem 1.4rem;\r\n    /* Visual */\r\n    background-color: transparent;\r\n    border: none;\r\n    border-left: 1px solid rgba(255, 255, 255, .3);\r\n    color: rgba(255, 255, 255, 1);\r\n    outline: none;\r\n\r\n    /* Typography */\r\n    font-size: .85rem;\r\n    font-weight: 400;\r\n    text-transform: uppercase;\r\n}\r\n\r\n.NavBar li button span[class^=\"icon\"] {\r\n    font-size: 1.2rem;\r\n}\r\n\r\n/* Main */\r\n\r\n.Main {\r\n    overflow-y: auto;\r\n    padding: 0rem 1rem;\r\n}\r\n\r\n/* Calendar */\r\n\r\n.Day {\r\n    padding: 2rem 0rem;\r\n}\r\n\r\n.Day + .Day {\r\n    padding-top: 0;\r\n}\r\n\r\n.Day h2 {\r\n    /* Box mode */\r\n    margin: 0;\r\n    padding-bottom: .4rem;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n\r\n    /* Typography */\r\n    font-size: 1.1rem;\r\n    font-weight: 500;\r\n}\r\n\r\n.MatchList {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.MatchItem {\r\n    /* Box model */\r\n    height: 3rem;\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.MatchItem time {\r\n    /* Box model */\r\n    padding-left: .8rem;\r\n\r\n    /* Typography */\r\n    color: #b2b2b2;\r\n    font-size: .8rem;\r\n    font-weight: 500;\r\n}\r\n\r\n.MatchItem:first-child {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: row;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.TeamList {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n    padding-left: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.TeamItem {\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n}\r\n\r\n.TeamItem .team {\r\n    /* Box model */\r\n    width: 6rem;\r\n\r\n    /* Typograpgy */\r\n    font-size: .9rem;\r\n}\r\n\r\n.TeamItem .score {\r\n    font-weight: 500;\r\n}\r\n\r\n.TeamItem:first-child .team {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-right: 1.2rem;\r\n}\r\n\r\n.TeamItem:first-child .score {\r\n    margin-right: .2rem;\r\n}\r\n\r\n.TeamItem:last-child .team {\r\n    margin-left: 1.2rem;\r\n}\r\n\r\n.TeamItem:last-child .score {\r\n    margin-left: .2rem;\r\n}\r\n\r\n.TeamItem .score input {\r\n    /* Box model */\r\n    width: 2.5rem;\r\n    padding: 0 .1rem 0 .5rem;\r\n\r\n    /* Visual */\r\n    border: 1px solid #222;\r\n    border-radius: 3px;\r\n\r\n    /* Typography */\r\n    color: #222;\r\n}\r\n\r\n.TeamItem .score input[class=\"disabled\"] {\r\n    /* Visual */\r\n    cursor: not-allowed;\r\n    border-color: #ddd;\r\n}\r\n\r\n.Validation span[class^=\"icon\"] {\r\n    font-size: 1.5rem;\r\n    font-weight: 300;\r\n    color: #4CAF50;\r\n}\r\n\r\n@media screen and (min-width: 600px) {\r\n    .Logo {\r\n        font-size: 1.1rem;\r\n    }\r\n\r\n    .NavBar li a,\r\n    .NavBar li button {\r\n        /* Box model */\r\n        padding: 0rem 1rem;\r\n\r\n        /* Visual */\r\n        border: none;\r\n\r\n        /* Typography */\r\n        color: rgba(255, 255, 255, .8);\r\n        font-size: .85rem;\r\n        text-transform: uppercase;\r\n        font-weight: 400;\r\n    }\r\n\r\n    .NavBar li a span:last-child,\r\n    .NavBar li button span:last-child {\r\n        display: block;\r\n    }\r\n\r\n    .NavBar li a span[class^=\"icon\"],\r\n    .NavBar li button span[class^=\"icon\"] {\r\n        /* Box model */\r\n        padding-right: .5rem;\r\n\r\n        /* Typography */\r\n        font-size: .85rem;\r\n    }\r\n}", ""]);
+	exports.push([module.id, "*, *:before, *:after {\r\n    box-sizing: inherit;\r\n}\r\n\r\nhtml {\r\n    box-sizing: border-box;\r\n    overflow: hidden;\r\n    height: 100%;\r\n}\r\n\r\nbody,\r\n.App,\r\n#app,\r\n#app > div,\r\n.Main {\r\n    height: 100%;\r\n    display: flex;\r\n    flex-direction: column;\r\n}\r\n\r\n/* Icons */\r\n\r\n@font-face {\r\n    font-family: 'icomoon';\r\n    src:    url(" + __webpack_require__(726) + ");\r\n    src:    url(" + __webpack_require__(726) + "?#iefix) format('embedded-opentype'),\r\n    url(" + __webpack_require__(727) + ") format('truetype'),\r\n    url(" + __webpack_require__(728) + ") format('woff'),\r\n    url(" + __webpack_require__(729) + "?#icomoon) format('svg');\r\n    font-weight: normal;\r\n    font-style: normal;\r\n}\r\n\r\n[class^=\"icon-\"], [class*=\" icon-\"] {\r\n    /* use !important to prevent issues with browser extensions that change fonts */\r\n    font-family: 'icomoon' !important;\r\n    speak: none;\r\n    font-style: normal;\r\n    font-weight: normal;\r\n    font-variant: normal;\r\n    text-transform: none;\r\n    line-height: 1;\r\n\r\n    /* Better Font Rendering =========== */\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\n.icon-check-circle-o:before {\r\n    content: \"\\F05D\";\r\n}\r\n.icon-sign-out:before {\r\n    content: \"\\F08B\";\r\n}\r\n.icon-sign-in:before {\r\n    content: \"\\F090\";\r\n}\r\n.icon-trophy:before {\r\n    content: \"\\F091\";\r\n}\r\n.icon-futbol-o:before {\r\n    content: \"\\F1E3\";\r\n}\r\n.icon-soccer-ball-o:before {\r\n    content: \"\\F1E3\";\r\n}\r\n\r\n.App {\r\n    font-family: 'Roboto', sans-serif;\r\n}\r\n\r\n/* Header */\r\n\r\n.Header {\r\n    /* Box model */\r\n    height: 4rem;\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    padding: 0rem 1rem;\r\n\r\n    /* Visual */\r\n    background-color: #4CAF50;\r\n\r\n    /* Typography */\r\n    color: white;\r\n}\r\n\r\n.Logo {\r\n    /* Box model */\r\n    margin: 0;\r\n\r\n    /* Typography */\r\n    font-size: 1rem;\r\n    font-style: italic;\r\n    text-transform: uppercase;\r\n}\r\n\r\n.Logo a {\r\n    /* Visual */\r\n    outline: none;\r\n\r\n    /* Typography */\r\n    color: white;\r\n    text-decoration: none;\r\n}\r\n\r\n.Logo span:first-child{\r\n    font-weight: 500;\r\n}\r\n\r\n.Logo span:last-child{\r\n    font-weight: 300;\r\n}\r\n\r\n/* NavBar */\r\n\r\n.NavBar {\r\n    font-weight: 300;\r\n}\r\n\r\n.NavBar,\r\n.NavBar ul {\r\n    display: flex;\r\n    align-items: center;\r\n    height: 100%;\r\n}\r\n\r\n.NavBar ul {\r\n    flex-direction: row;\r\n    margin: 0;\r\n    margin-right: -1rem;\r\n    padding: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.NavBar li {\r\n    display: flex;\r\n    height: 100%;\r\n}\r\n\r\n.NavBar li a {\r\n    /* Box model */\r\n    height: 100%;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0rem 1.4rem;\r\n\r\n    /* Visual */\r\n    border-left: 1px solid rgba(255, 255, 255, .3);\r\n    outline: none;\r\n    text-decoration: none;\r\n\r\n    /* Typography */\r\n    color: rgba(255, 255, 255, 1);\r\n}\r\n\r\n.NavBar li a span:last-child,\r\n.NavBar li button span:last-child {\r\n    display: none;\r\n}\r\n\r\n.NavBar li a span[class^=\"icon\"] {\r\n    font-size: 1.2rem;\r\n}\r\n\r\n.NavBar li:hover a,\r\n.NavBar li:hover button,\r\n.NavBar li .active {\r\n    /* Visual */\r\n    background-color: rgba(255, 255, 255, 0.2);\r\n\r\n    /* Typography */\r\n    color: rgba(255, 255, 255, 1);\r\n}\r\n\r\n.NavBar button {\r\n    /* Box model */\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0rem 1.4rem;\r\n    /* Visual */\r\n    background-color: transparent;\r\n    border: none;\r\n    border-left: 1px solid rgba(255, 255, 255, .3);\r\n    color: rgba(255, 255, 255, 1);\r\n    outline: none;\r\n\r\n    /* Typography */\r\n    font-size: .85rem;\r\n    font-weight: 400;\r\n    text-transform: uppercase;\r\n}\r\n\r\n.NavBar li button span[class^=\"icon\"] {\r\n    font-size: 1.2rem;\r\n}\r\n\r\n/* Main */\r\n\r\n.Main {\r\n    overflow-y: auto;\r\n    padding: 0rem 1rem;\r\n}\r\n\r\n/* Calendar */\r\n\r\n.Day {\r\n    padding: 2rem 0rem;\r\n}\r\n\r\n.Day + .Day {\r\n    padding-top: 0;\r\n}\r\n\r\n.Day h2 {\r\n    /* Box mode */\r\n    margin: 0;\r\n    padding-bottom: .4rem;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n\r\n    /* Typography */\r\n    font-size: 1.1rem;\r\n    font-weight: 500;\r\n}\r\n\r\n.MatchList {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.MatchItem {\r\n    /* Box model */\r\n    height: 3rem;\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.MatchItem time {\r\n    /* Box model */\r\n    padding-left: .8rem;\r\n\r\n    /* Typography */\r\n    color: #b2b2b2;\r\n    font-size: .8rem;\r\n    font-weight: 500;\r\n}\r\n\r\n.MatchItem:first-child {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: row;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.TeamList {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n    padding-left: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.TeamItem {\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n}\r\n\r\n.TeamItem .team {\r\n    /* Box model */\r\n    width: 6rem;\r\n\r\n    /* Typograpgy */\r\n    font-size: .9rem;\r\n}\r\n\r\n.TeamItem .score {\r\n    font-weight: 500;\r\n}\r\n\r\n.TeamItem:first-child .team {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-right: 1.2rem;\r\n}\r\n\r\n.TeamItem:first-child .score {\r\n    margin-right: .2rem;\r\n}\r\n\r\n.TeamItem:last-child .team {\r\n    margin-left: 1.2rem;\r\n}\r\n\r\n.TeamItem:last-child .score {\r\n    margin-left: .2rem;\r\n}\r\n\r\n.TeamItem .score input {\r\n    /* Box model */\r\n    width: 2.5rem;\r\n    padding: 0 .1rem 0 .5rem;\r\n\r\n    /* Visual */\r\n    border: 1px solid #222;\r\n    border-radius: 3px;\r\n\r\n    /* Typography */\r\n    color: #222;\r\n}\r\n\r\n.TeamItem .score input[class=\"disabled\"] {\r\n    /* Visual */\r\n    cursor: not-allowed;\r\n    border-color: #ddd;\r\n}\r\n\r\n.RankingList {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.RankingItem {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n\r\n    /* Visual */\r\n    border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.UserList {\r\n    /* Box model */\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n    /* Visual */\r\n    list-style: none;\r\n}\r\n\r\n.UserItem {\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: center;\r\n}\r\n\r\n.UserItem .score {\r\n    flex-direction: row;\r\n    align-items: center;\r\n    width: 2.4rem;\r\n}\r\n\r\n.UserItem .name {\r\n    width: 10rem;\r\n}\r\n\r\n.UserItem span {\r\n    display: flex;\r\n    margin: 1.2rem;\r\n}\r\n\r\n\r\n\r\n.Validation span[class^=\"icon\"] {\r\n    font-size: 1.5rem;\r\n    font-weight: 300;\r\n    color: #4CAF50;\r\n}\r\n\r\n@media screen and (min-width: 600px) {\r\n    .Logo {\r\n        font-size: 1.1rem;\r\n    }\r\n\r\n    .NavBar li a,\r\n    .NavBar li button {\r\n        /* Box model */\r\n        padding: 0rem 1rem;\r\n\r\n        /* Visual */\r\n        border: none;\r\n\r\n        /* Typography */\r\n        color: rgba(255, 255, 255, .8);\r\n        font-size: .85rem;\r\n        text-transform: uppercase;\r\n        font-weight: 400;\r\n    }\r\n\r\n    .NavBar li a span:last-child,\r\n    .NavBar li button span:last-child {\r\n        display: block;\r\n    }\r\n\r\n    .NavBar li a span[class^=\"icon\"],\r\n    .NavBar li button span[class^=\"icon\"] {\r\n        /* Box model */\r\n        padding-right: .5rem;\r\n\r\n        /* Typography */\r\n        font-size: .85rem;\r\n    }\r\n}", ""]);
 
 	// exports
 
@@ -55311,7 +55311,7 @@
 	        _react2.default.createElement(
 	            'p',
 	            null,
-	            'Les scores doivent être enregistrés au plus tard 1h avant le début de la rencontre'
+	            'Les scores doivent être enregistrés au plus tard 5 minutes avant le début de la rencontre'
 	        ),
 	        _react2.default.createElement(
 	            'div',
@@ -55478,7 +55478,7 @@
 	}
 
 	function checkDate(matchDate) {
-	    return (0, _moment2.default)() >= (0, _moment2.default)(matchDate).subtract(1, 'hour');
+	    return (0, _moment2.default)() >= (0, _moment2.default)(matchDate).subtract(5, 'minute');
 	}
 
 	function BetItem(props) {
@@ -55692,50 +55692,54 @@
 	            'Classement des joueurs (pour la semaine)'
 	        ),
 	        _react2.default.createElement(
-	            'li',
-	            { className: 'MatchItem' },
+	            'ul',
+	            { className: 'RankingList' },
 	            _react2.default.createElement(
-	                'ul',
-	                { className: 'TeamList' },
+	                'li',
+	                { className: 'RankingItem' },
 	                _react2.default.createElement(
-	                    'li',
-	                    { className: 'TeamItem' },
-	                    _react2.default.createElement('span', { className: 'team' }),
-	                    _react2.default.createElement('span', { className: 'team' }),
+	                    'ul',
+	                    { className: 'UserList' },
 	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'score' },
-	                        'Total'
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'score' },
-	                        'Week'
+	                        'li',
+	                        { className: 'UserItem' },
+	                        _react2.default.createElement('span', { className: 'avatar' }),
+	                        _react2.default.createElement('span', { className: 'name' }),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'score' },
+	                            'Total'
+	                        ),
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'score' },
+	                            'Week'
+	                        )
 	                    )
 	                )
 	            )
 	        ),
 	        _react2.default.createElement(
 	            'ul',
-	            { className: 'MatchList' },
+	            { className: 'RankingList' },
 	            props.scoreByUser.map(function (user) {
 	                return _react2.default.createElement(
 	                    'li',
-	                    { key: user.displayName, className: 'MatchItem' },
+	                    { key: user.displayName, className: 'RankingItem' },
 	                    _react2.default.createElement(
 	                        'ul',
-	                        { className: 'TeamList' },
+	                        { className: 'UserList' },
 	                        _react2.default.createElement(
 	                            'li',
-	                            { className: 'TeamItem' },
+	                            { className: 'UserItem' },
 	                            _react2.default.createElement(
 	                                'span',
-	                                { className: 'team' },
+	                                { className: 'avatar' },
 	                                _react2.default.createElement('img', { src: user.avatar, width: '40px', height: '40px' })
 	                            ),
 	                            _react2.default.createElement(
 	                                'span',
-	                                { className: 'team' },
+	                                { className: 'name' },
 	                                user.displayName
 	                            ),
 	                            _react2.default.createElement(

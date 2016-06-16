@@ -7,7 +7,7 @@ export default function Bets(props) {
     const { matchsByDate, userData, handleChange } = props;
     return (
         <div>
-            <p>Les scores doivent être enregistrés au plus tard 1h avant le début de la rencontre</p>
+            <p>Les scores doivent être enregistrés au plus tard 5 minutes avant le début de la rencontre</p>
             <div>score: {userData.score}</div>
             <div>
                 {

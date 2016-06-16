@@ -14,7 +14,7 @@ function mergeBet(event, oldBet, match) {
 }
 
 function checkDate(matchDate) {
-    return moment() >= moment(matchDate).subtract(1, 'hour');
+    return moment() >= moment(matchDate).subtract(5, 'minute');
 }
 
 export default function BetItem(props) {
